@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Calendario : MonoBehaviour{
+public class Calendario : MonoBehaviour, IPointerDownHandler{
     
     [SerializeField] private Text textoDia;
     [SerializeField] private int dia;
@@ -64,5 +65,9 @@ public class Calendario : MonoBehaviour{
                 SceneManager.LoadScene("Game Over");
             }
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData){
+        verCalendario();
     }
 }

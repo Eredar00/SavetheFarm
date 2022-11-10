@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SiguienteDia : MonoBehaviour, IPointerDownHandler
+public class SiguienteDia : MonoBehaviour
 {
-    [SerializeField] private Image siguienteDia;
 
-    public void OnPointerDown(PointerEventData eventData){
+    public void AvanzarDia(){
         GameManager.gameManager.ChangeState(GameManager.GameState.CambiarDia);
     }
+
+   
+        
+    
 }

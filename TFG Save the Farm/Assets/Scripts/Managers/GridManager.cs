@@ -42,7 +42,7 @@ public class GridManager : MonoBehaviour{
         
         
 
-        int[] precios = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+        int[] precios = {40,30,40,20,10,20,5,5,20,10,20,40,30,40};
 
         Vector3[] posiciones = {    new Vector3 { x = 1, y = 1, z = 0 } , 
                                     new Vector3 { x = 1, y = 4, z = 0 } , 
