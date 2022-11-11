@@ -12,6 +12,7 @@ public class Calendario : MonoBehaviour, IPointerDownHandler{
     [SerializeField] GameObject calendario; 
     [SerializeField] GameObject[] dias;
     private Sprite cruz;
+    private bool finalJuego;
 
     private void Start() {
         cruz = Resources.Load<Sprite>("Sprites/Calendario/Cruz");
@@ -19,6 +20,7 @@ public class Calendario : MonoBehaviour, IPointerDownHandler{
         dia = 1;
         ActualizarTextoDia();
         dias[dia-1].GetComponentInChildren<Image>().color = new Color(0,255,0,255);
+        finalJuego = false;
     }
 
     private void Update() {
@@ -30,10 +32,12 @@ public class Calendario : MonoBehaviour, IPointerDownHandler{
     }
 
     public void SumarDia(){
-        tachar();
         RevisarEstadoDias();
-        dia++;
-        ActualizarTextoDia();
+        if(!finalJuego){
+            tachar();
+            dia++;
+            ActualizarTextoDia();
+        }
     }
 
     private void tachar(){
@@ -55,13 +59,16 @@ public class Calendario : MonoBehaviour, IPointerDownHandler{
             if(Dinero.dinero.ObtenerDinero() >= 100){
                 Dinero.dinero.VariarDinero(-100);
             }else{
+                finalJuego = true;
                 SceneManager.LoadScene("Game Over");
             }
         }else if(dia == 28){
             if(Dinero.dinero.ObtenerDinero() >= 200){
                 Dinero.dinero.VariarDinero(-200);
-                Debug.Log("Win"); // Win
+                finalJuego = true;
+                SceneManager.LoadScene("Ganador");
             }else{
+                finalJuego = true;
                 SceneManager.LoadScene("Game Over");
             }
         }

@@ -18,7 +18,7 @@ public class BloqueCasillas : MonoBehaviour
         if(GameManager.gameManager.pausa == true) return;
         if(GameManager.gameManager.canvas == true){OnMouseExit(); return;}
         
-        if(Dinero.dinero.ObtenerDinero() > precio){
+        if(Dinero.dinero.ObtenerDinero() >= precio){
             candado.GetComponent<SpriteRenderer>().color = Color.green;
         }else{
             candado.GetComponent<SpriteRenderer>().color = Color.red;
@@ -33,7 +33,7 @@ public class BloqueCasillas : MonoBehaviour
     
     private void OnMouseDown() {
         if(GameManager.gameManager.pausa == true || GameManager.gameManager.canvas == true) return;
-        if(Dinero.dinero.ObtenerDinero() > precio){
+        if(Dinero.dinero.ObtenerDinero() >= precio){
             Dinero.dinero.VariarDinero(-precio);
             ConvertirCasillas();
             Destroy(this.gameObject);

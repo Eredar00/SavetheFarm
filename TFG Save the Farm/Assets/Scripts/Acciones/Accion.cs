@@ -8,6 +8,7 @@ public class Accion : MonoBehaviour, IPointerDownHandler
 {
     
     [SerializeField] private int nivelHerramienta;
+    [SerializeField] private int nivelHerramientaMax;
     [SerializeField] private int costeEnergia;
     [SerializeField] private int numAccion;
     [SerializeField] private KeyCode tecla;
@@ -16,7 +17,7 @@ public class Accion : MonoBehaviour, IPointerDownHandler
     private void Start() {
         transform.Find("Imagen").GetComponent<Image>().sprite = imagenes[0];
         nivelHerramienta = 1;
-        costeEnergia = 10;
+        costeEnergia = 5;
     }
 
     private void Update() {
@@ -42,6 +43,10 @@ public class Accion : MonoBehaviour, IPointerDownHandler
 
     public int ObtenerNivel(){
         return nivelHerramienta;
+    }
+
+    public int ObtenerNivelMax(){
+        return nivelHerramientaMax;
     }
 
     public int ObtenerCosteEnergia(){

@@ -35,7 +35,7 @@ public class Cosecha : MonoBehaviour
 
     public void QuitarCosecha(){
         transform.GetComponent<SpriteRenderer>().sprite = vacio;
-        Dinero.dinero.VariarDinero(numeroCosecha);
+        Dinero.dinero.VariarDinero(numeroCosecha*10);
     }
 
 

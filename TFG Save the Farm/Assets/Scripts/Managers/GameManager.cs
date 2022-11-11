@@ -64,12 +64,7 @@ public class GameManager : MonoBehaviour{
     // Return: String --> Tipo de Highlight.
     // --------------------------------------------------------------------------
     public String ComprobarQueHighlightProcede(Tile tile, TileState tipoTile){
-        if((numAccion == 1) && (tipoTile == TileState.Bloqueado || tipoTile == TileState.Arado_Seca || tipoTile == TileState.Arado_Mojado)){return "Roja";}
-        if((numAccion == 2) && (tipoTile == TileState.Bloqueado || tipoTile == TileState.Tierra_Seca || tipoTile == TileState.Tierra_Mojada || tipoTile == TileState.Plantado_Seca || tipoTile == TileState.Plantado_Mojado || tipoTile == TileState.Cultivado_Seca || tipoTile == TileState.Cultivado_Mojado)){ return "Roja";}
-        if((numAccion == 3) && (tipoTile == TileState.Bloqueado || tipoTile == TileState.Tierra_Mojada || tipoTile == TileState.Arado_Mojado|| tipoTile == TileState.Plantado_Mojado || tipoTile == TileState.Cultivado_Mojado)){ return "Roja";}
-        if((numAccion == 4) && (tipoTile == TileState.Bloqueado || tipoTile == TileState.Tierra_Seca || tipoTile == TileState.Tierra_Mojada || tipoTile == TileState.Arado_Seca || tipoTile == TileState.Arado_Mojado || tipoTile == TileState.Plantado_Seca || tipoTile == TileState.Plantado_Mojado || tipoTile == TileState.Cultivado_Seca || tipoTile == TileState.Cultivado_Mojado)){ return "Roja";}
-        if(!HaySuficientesPEParaAccion()){return "Negra";}
-        return "Seleccion";
+        return acciones.ComprobarQueHighlightAccion(tile, tipoTile, numAccion);
     }
     
 
@@ -108,7 +103,7 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     // Return: Bool --> Resultado de comprobación de si hay suficientes PE
     // --------------------------------------------------------------------------
-    public bool HaySuficientesPEParaAccion(){
+    public bool HaySuficientesPuntosEnergiaParaAccion(){
         numAccion = Acciones.acciones.ObtenerValorAccionActual();
         if(puntosEnergia.RevisarPE(-Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().ObtenerCosteEnergia())){
             return true;
@@ -140,27 +135,8 @@ public class GameManager : MonoBehaviour{
     // Return: ---
     // --------------------------------------------------------------------------
     public void EjecutarAccionSobreCasilla(Tile tileRecibido){
-        if(HaySuficientesPEParaAccion()){
-            int costeEnergia = Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().ObtenerCosteEnergia();
-            if(numAccion == 1){
-                if(tileRecibido.ObtenerTipoTile() == TileState.Tierra_Seca) {tileRecibido.ChangeTileState(TileState.Arado_Seca); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Tierra_Mojada) {tileRecibido.ChangeTileState(TileState.Arado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Plantado_Seca) {tileRecibido.ChangeTileState(TileState.Arado_Seca); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Plantado_Mojado) {tileRecibido.ChangeTileState(TileState.Arado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Cultivado_Seca) {tileRecibido.ChangeTileState(TileState.Arado_Seca); tileRecibido.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Cultivado_Mojado) {tileRecibido.ChangeTileState(TileState.Arado_Mojado); tileRecibido.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            }else if(numAccion == 2){
-                if(tileRecibido.ObtenerTipoTile() == TileState.Arado_Seca) {tileRecibido.ChangeTileState(TileState.Plantado_Seca); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Arado_Mojado) {tileRecibido.ChangeTileState(TileState.Plantado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            }else if(numAccion == 3){
-                if(tileRecibido.ObtenerTipoTile() == TileState.Tierra_Seca) {tileRecibido.ChangeTileState(TileState.Tierra_Mojada); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Arado_Seca) {tileRecibido.ChangeTileState(TileState.Arado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Plantado_Seca) {tileRecibido.ChangeTileState(TileState.Plantado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                else if(tileRecibido.ObtenerTipoTile() == TileState.Cultivado_Seca) {tileRecibido.ChangeTileState(TileState.Cultivado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            }else if(numAccion == 4){
-                if(tileRecibido.ObtenerTipoTile() == TileState.Cosecha_Seca) {tileRecibido.ChangeTileState(TileState.Tierra_Seca); tileRecibido.QuitarCosecha(); tileRecibido.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-                if(tileRecibido.ObtenerTipoTile() == TileState.COsecha_Mojado) {tileRecibido.ChangeTileState(TileState.Tierra_Mojada); tileRecibido.QuitarCosecha(); tileRecibido.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            }
+        if(HaySuficientesPuntosEnergiaParaAccion()){
+            acciones.ResultadoAccion(tileRecibido, numAccion);
         }
     }
 
