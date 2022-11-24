@@ -19,10 +19,10 @@ public class Cosecha : MonoBehaviour
     private Sprite vacio, tomate, patata, zanahoria;
 
     private void Start() {
-        vacio = Resources.Load<Sprite>("Sprites/Plantas/vacio");
-        tomate = Resources.Load<Sprite>("Sprites/Plantas/Tomate");
-        patata = Resources.Load<Sprite>("Sprites/Plantas/Patata");
-        zanahoria = Resources.Load<Sprite>("Sprites/Plantas/Zanahoria");
+        vacio = Resources.Load<Sprite>("Sprites/Hortalizas/vacio");
+        tomate = Resources.Load<Sprite>("Sprites/Hortalizas/Tomate");
+        patata = Resources.Load<Sprite>("Sprites/Hortalizas/Patata");
+        zanahoria = Resources.Load<Sprite>("Sprites/Hortalizas/Zanahoria");
         numeroCosecha = 2;
         reiterativa = false;
         tipoPlanta = TipoCosecha.Tomate;
@@ -35,9 +35,8 @@ public class Cosecha : MonoBehaviour
 
     public void QuitarCosecha(){
         transform.GetComponent<SpriteRenderer>().sprite = vacio;
-        Dinero.dinero.VariarDinero(numeroCosecha*10);
+        if(tipoPlanta == TipoCosecha.Tomate){Hortalizas.hortalizas.getVegetal(0).VariarCantidadVegetal(numeroCosecha);}
+        if(tipoPlanta == TipoCosecha.Patata){Hortalizas.hortalizas.getVegetal(1).VariarCantidadVegetal(numeroCosecha);}
+        if(tipoPlanta == TipoCosecha.Zanahoria){Hortalizas.hortalizas.getVegetal(2).VariarCantidadVegetal(numeroCosecha);}
     }
-
-
-    
 }

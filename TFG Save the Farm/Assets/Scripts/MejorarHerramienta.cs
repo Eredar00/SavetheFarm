@@ -13,6 +13,7 @@ public class MejorarHerramienta : MonoBehaviour, IPointerExitHandler, IPointerEn
     }
     
     public void MejorarHerramientaSeleccionada(){
+        /*
         if(Dinero.dinero.ObtenerDinero() >= 20){
             if(Acciones.acciones.ObtenerConjuntoAcciones()[Acciones.acciones.ObtenerValorAccionActual()-1].GetComponent<Accion>().ObtenerNivel() <= 2){
                 Acciones.acciones.ObtenerConjuntoAcciones()[Acciones.acciones.ObtenerValorAccionActual()-1].GetComponent<Accion>().SubirNivel();
@@ -21,6 +22,7 @@ public class MejorarHerramienta : MonoBehaviour, IPointerExitHandler, IPointerEn
                 RevisarColorBoton();
             }
         }
+        */
     }
 
     public void OnPointerEnter(PointerEventData eventData){
@@ -32,11 +34,13 @@ public class MejorarHerramienta : MonoBehaviour, IPointerExitHandler, IPointerEn
     }
 
     private void RevisarColorBoton(){
+        /*
         Accion accionActual = Acciones.acciones.ObtenerConjuntoAcciones()[Acciones.acciones.ObtenerValorAccionActual()-1].GetComponent<Accion>();
         if((Dinero.dinero.ObtenerDinero() >= 20) && (accionActual.ObtenerNivel() < accionActual.ObtenerNivelMax())){
             imagenBoton.color = new Color(0,255,0,255);
         }else{
             imagenBoton.color = new Color(255,0,0,255);
         }
+        */
     }
 }

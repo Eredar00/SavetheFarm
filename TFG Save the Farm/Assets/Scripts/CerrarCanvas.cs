@@ -17,6 +17,7 @@ public class CerrarCanvas : MonoBehaviour, IPointerDownHandler, IPointerEnterHan
 
     public void OnPointerDown(PointerEventData eventData){
         canvasParaCerrar.SetActive(false);
+        GameManager.gameManager.CambiarFocusCanvas(false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

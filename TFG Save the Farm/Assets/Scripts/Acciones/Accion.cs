@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +7,19 @@ using UnityEngine.UI;
 
 public class Accion : MonoBehaviour, IPointerDownHandler
 {
-    
-    [SerializeField] private int nivelHerramienta;
-    [SerializeField] private int nivelHerramientaMax;
-    [SerializeField] private int costeEnergia;
     [SerializeField] private int numAccion;
     [SerializeField] private KeyCode tecla;
     [SerializeField] private Sprite[] imagenes;
 
+    [SerializeField] private int nivelPE = 1;
+    [SerializeField] private int nivelCasillas = 1;
+    [SerializeField] private int costePE;
+    [SerializeField] private String nombreHerramienta;
+    [SerializeField] private String descripcionHerramienta;
+
     private void Start() {
-        transform.Find("Imagen").GetComponent<Image>().sprite = imagenes[0];
-        nivelHerramienta = 1;
-        costeEnergia = 5;
+        CambiarImagen();
+        CalcularCostePE();
     }
 
     private void Update() {
@@ -32,24 +34,49 @@ public class Accion : MonoBehaviour, IPointerDownHandler
         Acciones.acciones.CambiarAccion(numAccion); 
     }
 
-    public void SubirNivel(){
-        nivelHerramienta ++;
-        transform.Find("Imagen").GetComponent<Image>().sprite = imagenes[nivelHerramienta-1];
+    private void CambiarImagen(){
+        transform.Find("Imagen").GetComponent<Image>().sprite = imagenes[nivelCasillas-1];
     }
 
-    public void VariarCosteEnergia(int variacion){
-        costeEnergia = costeEnergia + variacion;
+    private void CalcularCostePE(){
+        costePE = 12 - nivelPE;
     }
 
-    public int ObtenerNivel(){
-        return nivelHerramienta;
+    public void SubirNivelPE(){
+        nivelPE ++;
+        CalcularCostePE();
     }
 
-    public int ObtenerNivelMax(){
-        return nivelHerramientaMax;
+    public void SubirNivelCasillas(){
+        nivelCasillas ++;
+        CambiarImagen();
     }
 
-    public int ObtenerCosteEnergia(){
-        return costeEnergia;
+    public String getNombreHerramienta(){
+        return nombreHerramienta;
+    }
+
+    public String getDescripcionHerramienta(){
+        return descripcionHerramienta;
+    }
+
+    public int getNivelPE(){
+        return nivelPE;
+    }
+
+    public int getNivelCasillas(){
+        return nivelCasillas;
+    }
+
+    public int getCostePE(){
+        return costePE;
+    }
+
+    public Sprite getImagen(){
+        return imagenes[nivelCasillas-1];
+    }
+
+    public int getNumAccion(){
+        return numAccion;
     }
 }

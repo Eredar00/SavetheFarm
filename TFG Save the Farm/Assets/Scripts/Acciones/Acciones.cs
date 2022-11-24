@@ -36,6 +36,14 @@ public class Acciones : MonoBehaviour{
         } 
     }
 
+    public Accion getAccionActual(){
+        return  conjuntoAcciones[numeroAccionActual-1].GetComponent<Accion>();
+    }
+
+    public Accion getAccionConcrecta(int numero){
+        return  conjuntoAcciones[numero-1].GetComponent<Accion>();
+    }
+
     public int ObtenerValorAccionActual(){
         return numeroAccionActual;
     }
@@ -45,7 +53,7 @@ public class Acciones : MonoBehaviour{
     }
 
     public void ResultadoAccion(Tile tileRecibido, int numAccion){
-        int costeEnergia = Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().ObtenerCosteEnergia();
+        int costeEnergia = Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().getCostePE();
             
             if(numAccion == 1){
 

@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     public int ComprobarNivelAccion(){
         numAccion = Acciones.acciones.ObtenerValorAccionActual();
-        return Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().ObtenerNivel();
+        return Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().getNivelCasillas();
     }
 
     // --------------------------------------------------------------------------
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     public bool HaySuficientesPuntosEnergiaParaAccion(){
         numAccion = Acciones.acciones.ObtenerValorAccionActual();
-        if(puntosEnergia.RevisarPE(-Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().ObtenerCosteEnergia())){
+        if(puntosEnergia.RevisarPE(-Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().getCostePE())){
             return true;
         }else{
             return false;
@@ -202,6 +202,10 @@ public class GameManager : MonoBehaviour{
     public int ObtenerAccion(){
         //accion = acciones.ObtenerValorAccion();
         return acciones.ObtenerValorAccionActual();;
+    }
+
+    public void CambiarFocusCanvas(bool valor){
+        canvas = valor;
     }
 
 
