@@ -842,6 +842,7 @@ GameObject:
   - component: {fileID: 1313513664}
   - component: {fileID: 1313513663}
   - component: {fileID: 1313513665}
+  - component: {fileID: 1313513666}
   m_Layer: 0
   m_Name: ControladorEscenas
   m_TagString: Untagged
@@ -888,6 +889,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2fac238979d4ca49807fba4e1df97f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1313513666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313513662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edab701975c945443bee67790039207e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetos:
+  - {fileID: 2130487484}
 --- !u!1 &1698206997
 GameObject:
   m_ObjectHideFlags: 0

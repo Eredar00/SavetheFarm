@@ -7,7 +7,7 @@ public class ControlBotones : MonoBehaviour{
     public static ControlBotones controlBotones;
     
     [SerializeField] GameObject tiendaHortalizas;
-    [SerializeField] GameObject tiendaAcciones; 
+    [SerializeField] GameObject _TiendaHerramientas; 
     [SerializeField] GameObject calendario; 
 
     private void Awake() {
@@ -20,14 +20,33 @@ public class ControlBotones : MonoBehaviour{
 
     private void Update() {
         if(Input.GetKeyDown(KeyCode.H)) verTiendaHortalizas();
-        if(Input.GetKeyDown(KeyCode.T)) verTiendaAcciones();
+        if(Input.GetKeyDown(KeyCode.T)) VerTiendaHerramientas();
         if(Input.GetKeyDown(KeyCode.C)) verCalendario();
+        if(Input.GetKeyDown(KeyCode.R)) Casillas.casillas.SiguienteCasilla();
+        if(Input.GetKeyDown(KeyCode.P)) Semillas.semillas.SiguienteSemilla();
+        if(Input.GetKeyDown(KeyCode.Escape)) BotonEscape();
+    }
+
+    private void BotonEscape(){
+        if(HayAlgunActivo()){
+            LimpiarTodosLosActive();
+        }else{
+            // Abrir opciones
+        }
+    }
+
+    private bool HayAlgunActivo(){
+        if(tiendaHortalizas.activeSelf){return true;}
+        if(_TiendaHerramientas.activeSelf){return true;}
+        if(calendario.activeSelf){return true;}
+        return false;
     }
 
     public void LimpiarTodosLosActive(){
         tiendaHortalizas.SetActive(false);
-        tiendaAcciones.SetActive(false);
+        _TiendaHerramientas.SetActive(false);
         calendario.SetActive(false);
+        GameManager.gameManager.CambiarFocusCanvas(false);
     }
 
     public GameObject getTiendaHortalizas(){return tiendaHortalizas;}
@@ -41,18 +60,24 @@ public class ControlBotones : MonoBehaviour{
             tiendaHortalizas.SetActive(true);
             tiendaHortalizas.transform.Find("Menu 02").gameObject.SetActive(false);
             tiendaHortalizas.transform.Find("Menu 01").gameObject.SetActive(true);
-            
+
+            Cultivos[] _ListaCultivos = GameManager.gameManager.GetHortalizas().GetCultivos();
+            foreach (Cultivos tipos in _ListaCultivos){
+                tipos.ActualizarTextoMenu01();
+            } 
         }
     }
 
-    private void verTiendaAcciones(){  
-        if(tiendaAcciones.activeSelf){
-            tiendaAcciones.SetActive(false);
+    private void VerTiendaHerramientas(){  
+        Taller taller = GameManager.gameManager.GetTaller();
+        if(_TiendaHerramientas.activeSelf){
+            _TiendaHerramientas.SetActive(false);
             GameManager.gameManager.CambiarFocusCanvas(false);
         }else{
             LimpiarTodosLosActive();
-            tiendaAcciones.GetComponent<Tienda_Acciones>().ActualizarTextos(Acciones.acciones.getAccionActual());
-            tiendaAcciones.SetActive(true);
+            _TiendaHerramientas.SetActive(true);
+            _TiendaHerramientas.GetComponent<Tienda_Herramientas>().ActualizarTextos(taller.GetHerramientaPorPosicion(taller.NumeroHerramientaActual - 1));
+            
         }
     }
 

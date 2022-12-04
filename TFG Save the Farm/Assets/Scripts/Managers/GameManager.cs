@@ -6,40 +6,51 @@ using UnityEngine;
 public class GameManager : MonoBehaviour{
 
     // Clases públicas
+    [Header("Public")]
     public static GameManager gameManager;
     public GameState estadoActual;
+    private Hortalizas hortalizas;
+    private Taller _TallerHerramientas;
+    private Cultivos[] ListaCultivos;
 
     // Otras clases
-    [SerializeField] private Acciones acciones;
     [SerializeField] private PuntosEnergia puntosEnergia;
     [SerializeField] public Boolean pausa;
     [SerializeField] public Boolean canvas;
     [SerializeField] private Calendario tiempo;
-    [SerializeField] private Tile tileFocused;
+    [SerializeField] private Casilla _CasillaFocus;
+    [SerializeField] private int _NumeroHerramienta;
+    [SerializeField] private GameObject _InfoCasilla;
+
+    public GameObject InfoCasilla { get => _InfoCasilla; set => _InfoCasilla = value; }
+    public int NumeroHerramienta { get => _NumeroHerramienta; set => _NumeroHerramienta = value; }
+    public Casilla CasillaFocus { get => _CasillaFocus; set => _CasillaFocus = value; }
 
 
-    [SerializeField] private int numAccion;
-
-    [SerializeField] public bool valorR;
 
     // Funcion Awake
     private void Awake() {
         gameManager = this;
-        acciones = GetComponent<Acciones>();
+        hortalizas = transform.GetComponent<Hortalizas>();
+        _TallerHerramientas = transform.GetComponent<Taller>();
     }
 
     // Función Start
     private void Start() {
-        valorR = false;
         ChangeState(GameState.GenerarMapa);
-        //numAccion = ObtenerAccion();
+        InicializarVariables();
+        
+    }    
+
+    private void InicializarVariables(){
+        ListaCultivos = GameManager.gameManager.GetHortalizas().GetCultivos();
+        ListaCultivos[0].GetComponent<Tomate>().Inicializar();
+        ListaCultivos[1].GetComponent<Patata>().Inicializar();
+        ListaCultivos[2].GetComponent<Zanahoria>().Inicializar();
     }
 
-    // Función Update
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.R)) valorR = !valorR;
-    }
-    
+    public Hortalizas GetHortalizas(){return hortalizas;}
+    public Taller GetTaller(){return _TallerHerramientas;}
 
     // --------------------------------------------------------------------------
     // public int ComprobarNivelAccion()
@@ -50,8 +61,8 @@ public class GameManager : MonoBehaviour{
     // Return: int --> Nivel de Acción.
     // --------------------------------------------------------------------------
     public int ComprobarNivelAccion(){
-        numAccion = Acciones.acciones.ObtenerValorAccionActual();
-        return Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().getNivelCasillas();
+        NumeroHerramienta = _TallerHerramientas.NumeroHerramientaActual;
+        return _TallerHerramientas.GetHerramientaPorPosicion(NumeroHerramienta-1).NivelHerramientaCasillas;
     }
 
     // --------------------------------------------------------------------------
@@ -63,8 +74,8 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     // Return: String --> Tipo de Highlight.
     // --------------------------------------------------------------------------
-    public String ComprobarQueHighlightProcede(Tile tile, TileState tipoTile){
-        return acciones.ComprobarQueHighlightAccion(tile, tipoTile, numAccion);
+    public String ComprobarQueHighlightProcede(Casilla tile, TipoCasilla tipoTile){
+        return _TallerHerramientas.ComprobarQueHighlightHerramienta(tile, tipoTile, NumeroHerramienta);
     }
     
 
@@ -76,8 +87,8 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     // Return: ---
     // --------------------------------------------------------------------------
-    public void CambiarTileFocused(Tile tileRecibido){
-        tileFocused = tileRecibido;
+    public void CambiarTileFocused(Casilla tileRecibido){
+        CasillaFocus = tileRecibido;
     }
 
 
@@ -89,8 +100,8 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     // Return: Tile --> Casilla en la que está el cursor
     // --------------------------------------------------------------------------
-    public Tile ObtenerTileFocused(){
-        return tileFocused;
+    public Casilla ObtenerTileFocused(){
+        return CasillaFocus;
     }
 
     // --------------------------------------------------------------------------
@@ -104,8 +115,8 @@ public class GameManager : MonoBehaviour{
     // Return: Bool --> Resultado de comprobación de si hay suficientes PE
     // --------------------------------------------------------------------------
     public bool HaySuficientesPuntosEnergiaParaAccion(){
-        numAccion = Acciones.acciones.ObtenerValorAccionActual();
-        if(puntosEnergia.RevisarPE(-Acciones.acciones.ObtenerConjuntoAcciones()[numAccion-1].GetComponent<Accion>().getCostePE())){
+        NumeroHerramienta = _TallerHerramientas.NumeroHerramientaActual;
+        if(puntosEnergia.RevisarPE(-_TallerHerramientas.GetHerramientaPorPosicion(NumeroHerramienta-1).GetComponent<Herramienta>().CosteHerramientaPE)){
             return true;
         }else{
             return false;
@@ -134,9 +145,9 @@ public class GameManager : MonoBehaviour{
     // --------------------------------------------------------------------------
     // Return: ---
     // --------------------------------------------------------------------------
-    public void EjecutarAccionSobreCasilla(Tile tileRecibido){
+    public void EjecutarAccionSobreCasilla(Casilla tileRecibido){
         if(HaySuficientesPuntosEnergiaParaAccion()){
-            acciones.ResultadoAccion(tileRecibido, numAccion);
+            _TallerHerramientas.ResultadoAccion(tileRecibido, NumeroHerramienta);
         }
     }
 
@@ -178,38 +189,44 @@ public class GameManager : MonoBehaviour{
 
     public void ActualizarTiles(){
 
-        for (int x = 0; x < GridManager.gridManager.width; x++){
-            for (int y = 0; y < GridManager.gridManager.height; y++){
-                Tile Tileee = GridManager.gridManager.GetTileAtPosition(new Vector2(x,y));
+        for (int x = 0; x < GridManager.gridManager._Ancho; x++){
+            for (int y = 0; y < GridManager.gridManager._Largo; y++){
 
-                if(Tileee.ObtenerTipoTile() == TileState.Arado_Seca || Tileee.ObtenerTipoTile() == TileState.Plantado_Seca || Tileee.ObtenerTipoTile() == TileState.Tierra_Mojada){Tileee.ChangeTileState(TileState.Tierra_Seca);
-                }else if(Tileee.ObtenerTipoTile() == TileState.Arado_Mojado){Tileee.ChangeTileState(TileState.Arado_Seca);
-                }else if(Tileee.ObtenerTipoTile() == TileState.Plantado_Mojado || Tileee.ObtenerTipoTile() == TileState.Cultivado_Mojado){
-                    Tileee.ChangeTileState(TileState.Cultivado_Seca);
-                    Tileee.PlantarPlanta();
-                    Tileee.CrecerPlanta(1);
-                }else if(Tileee.ObtenerTipoTile() == TileState.Cultivado_Seca){
-                    Tileee.ChangeTileState(TileState.Tierra_Seca);
-                    Tileee.EliminarPlanta();
+                Casilla casilla = GridManager.gridManager.GetTileAtPosition(new Vector2(x,y));
+                Planta planta = casilla.GetPlanta();
+
+                if(casilla.GetTipoCasilla() == TipoCasilla.Arado_Seca || casilla.GetTipoCasilla() == TipoCasilla.Plantado_Seca || casilla.GetTipoCasilla() == TipoCasilla.Tierra_Mojada){
+                    casilla.SetTipoCasilla(TipoCasilla.Tierra_Seca);
+
+                }else if(casilla.GetTipoCasilla() == TipoCasilla.Arado_Mojado){
+                    casilla.SetTipoCasilla(TipoCasilla.Arado_Seca);
+
+                }else if(casilla.GetTipoCasilla() == TipoCasilla.Plantado_Mojado){
+                    if(!casilla.GetPlanta().SigueRegada()){
+                        casilla.SetTipoCasilla(TipoCasilla.Cultivado_Seca);
+                        planta.SetImagenSprite(0);
+                    }
+                    planta.CrecerPlanta();
+                }else if(casilla.GetTipoCasilla() == TipoCasilla.Cultivado_Mojado){
+                    if(!casilla.GetPlanta().SigueRegada()){
+                        casilla.SetTipoCasilla(TipoCasilla.Cultivado_Seca);
+                    }
+                    planta.CrecerPlanta();
+                }else if(casilla.GetTipoCasilla() == TipoCasilla.Cultivado_Seca){
+                    casilla.SetTipoCasilla(TipoCasilla.Tierra_Seca);
+                    planta.EliminarPlanta();
+
                 }
             }
         }
     }
 
-    
-
-
-    public int ObtenerAccion(){
-        //accion = acciones.ObtenerValorAccion();
-        return acciones.ObtenerValorAccionActual();;
-    }
 
     public void CambiarFocusCanvas(bool valor){
         canvas = valor;
     }
 
 
-    
 
     // Enum con los nombres de los estados posibles que hay en el juego
     public enum GameState{

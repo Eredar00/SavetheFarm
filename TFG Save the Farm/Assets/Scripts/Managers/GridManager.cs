@@ -7,14 +7,13 @@ public class GridManager : MonoBehaviour{
 
     public static GridManager gridManager;
 
-    [SerializeField] public int width, height;
-
-    [SerializeField] private Tile casilla, casillaCentral;
-    [SerializeField] private BloqueCasillas bloqueador;
+    [SerializeField] public int _Ancho, _Largo;
+    [SerializeField] private Casilla _CasillaNormal, _CasillaCentral;
+    [SerializeField] private BloqueCasillas _Bloqueador;
 
     [SerializeField] private Camera cam;
 
-    private Dictionary<Vector2, Tile> tiles;
+    private Dictionary<Vector2, Casilla> _Casillero;
 
     private void Awake() {
         gridManager = this;
@@ -22,26 +21,25 @@ public class GridManager : MonoBehaviour{
 
     public void GenerateGrid(){
 
-        tiles = new Dictionary<Vector2, Tile>();
-        for (int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
+        _Casillero = new Dictionary<Vector2, Casilla>();
+
+        for (int x = 0; x < _Ancho; x++){
+            for (int y = 0; y < _Largo; y++){
                 if( (x == 6 && y == 3) || (x == 6 && y == 4) || (x == 6 && y == 5) || (x == 7 && y == 3) || (x == 7 && y == 4) || (x == 7 && y == 5) || (x == 8 && y == 3) || (x == 8 && y == 4) || (x == 8 && y == 5)){
-                    casillaCentral.DarPosicion(x, y);
-                    var spawnedcasillaCentral = Instantiate(casillaCentral, new Vector3(x,y), Quaternion.identity);
+                    _CasillaCentral.SetPosicionCasilla(x, y);
+                    var spawnedcasillaCentral = Instantiate(_CasillaCentral, new Vector3(x,y), Quaternion.identity);
                     spawnedcasillaCentral.name = $"{x}|{y}";
-                    tiles[new Vector2(x,y)] = spawnedcasillaCentral;
+                    _Casillero[new Vector2(x,y)] = spawnedcasillaCentral;
                 }else{
-                    casilla.DarPosicion(x, y);
-                    var spawnedTile = Instantiate(casilla, new Vector3(x,y), Quaternion.identity);
-                    
+                    _CasillaNormal.SetPosicionCasilla(x, y);
+                    var spawnedTile = Instantiate(_CasillaNormal, new Vector3(x,y), Quaternion.identity);
                     spawnedTile.name = $"{x}|{y}";
-                    tiles[new Vector2(x,y)] = spawnedTile;
+                    
+                    _Casillero[new Vector2(x,y)] = spawnedTile;
                 }
             }
         }
         
-        
-
         int[] precios = {40,30,40,20,10,20,5,5,20,10,20,40,30,40};
 
         Vector3[] posiciones = {    new Vector3 { x = 1, y = 1, z = 0 } , 
@@ -61,32 +59,35 @@ public class GridManager : MonoBehaviour{
                                 };
 
         for (int e = 0; e < posiciones.Length; e++){
-            var spawnedBloqueador = Instantiate(bloqueador, posiciones[e], Quaternion.identity);
-            spawnedBloqueador.DarPosicion(((int)posiciones[e].x), (int)posiciones[e].y);
-            spawnedBloqueador.PonerPrecio(precios[e]);
+            var spawnedBloqueador = Instantiate(_Bloqueador, posiciones[e], Quaternion.identity);
+            spawnedBloqueador.SetPosicion(((int)posiciones[e].x), (int)posiciones[e].y);
+            spawnedBloqueador.name = $"{posiciones[e].x}|{posiciones[e].y}";
+            spawnedBloqueador.SetPrecio(precios[e]);
         }
 
         
         Prueba();
 
-        cam.transform.position = new Vector3((float)width/2 - 0.5f, (float)height/2 - 0.5f, -10);
+        cam.transform.position = new Vector3((float)_Ancho/2 - 0.5f, (float)_Largo/2 - 0.5f, -10);
         GameManager.gameManager.ChangeState(GameManager.GameState.JuegoEnMarcha);
     }
 
-    public Tile GetTileAtPosition(Vector2 pos){
-        if(tiles.TryGetValue(pos, out var tile)){
+    public Casilla GetTileAtPosition(Vector2 pos){
+        if(_Casillero.TryGetValue(pos, out var tile)){
             return tile;
         }
         return null;
     }
 
     private void Prueba(){
-        for (int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
+        for (int x = 0; x < _Ancho; x++){
+            for (int y = 0; y < _Largo; y++){
                 var Tileee = GetTileAtPosition(new Vector2(x,y));
-                Tileee.getTileSides();
+                Tileee.SetCasillasLados();
             }
         }
+
+
     }
     
 }

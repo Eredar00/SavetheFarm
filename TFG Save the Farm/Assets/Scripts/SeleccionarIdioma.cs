@@ -5,38 +5,28 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SeleccionarIdioma : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
-{   
-    private Image imagenBoton;
-    [SerializeField] private bool disponible;
-    [SerializeField] private GameObject textoNoDisponible;
+public class SeleccionarIdioma : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler{
 
+    private Image imagenBoton;
+    private string idioma;
 
     private void Start() {
         imagenBoton = GetComponent<Image>();
         imagenBoton.color = Color.gray;
+        idioma = transform.name;
     }
     
     public void OnPointerClick(PointerEventData eventData){
-         if(disponible == true){
-            SceneManager.LoadScene("Portada");
-        }
+        Opciones.opciones.Idioma = idioma;
+        SceneManager.LoadScene("Portada");
     }
 
     public void OnPointerEnter(PointerEventData eventData){
-        RevisarColorBoton();
+        imagenBoton.color = Color.white;
     }
 
     public void OnPointerExit(PointerEventData eventData){
         imagenBoton.color = Color.gray;
-        textoNoDisponible.SetActive(false);
     }
 
-    private void RevisarColorBoton(){
-        if(disponible == true){
-            imagenBoton.color = Color.white;
-        }else{
-            textoNoDisponible.SetActive(true);
-        }
-    }
 }

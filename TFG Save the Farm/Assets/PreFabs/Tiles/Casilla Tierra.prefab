@@ -127,10 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9216f935c243d084a8fee9b4466661da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numeroCosecha: 0
-  reiterativa: 0
-  tipoPlanta: 0
-  cadaCuantoCosecha: 0
 --- !u!1 &567744751271847204
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,10 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f58dd8dc240bf8b45b628623e2bdbf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puntosCrecimiento: 0
-  puntosMax: 0
-  tipoPlanta: 0
-  regada: 0
 --- !u!1 &1049192204978230213
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,17 +525,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b700f35e177cb642815f8a01eba58b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cruzRoja: {fileID: 7374644401178189135}
-  cruzVerde: {fileID: 3916057342540430889}
-  seleccion: {fileID: 7073101392475031839}
-  tipoTile: 1
-  boxCollider2D: {fileID: 0}
-  posicionX: 14
-  posicionY: 8
-  tileUp: {fileID: 0}
-  tileDown: {fileID: 0}
-  tileRight: {fileID: 0}
-  tileLeft: {fileID: 0}
+  _TipoCasilla: 1
+  _PosX: 0
+  _PosY: 0
+  _Casilla_Arriba: {fileID: 0}
+  _Casilla_Abajo: {fileID: 0}
+  _Casilla_Derecha: {fileID: 0}
+  _Casilla_Izquierda: {fileID: 0}
 --- !u!61 &-4628252742882937363
 BoxCollider2D:
   m_ObjectHideFlags: 0
