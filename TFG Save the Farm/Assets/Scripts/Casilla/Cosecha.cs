@@ -18,6 +18,9 @@ public class Cosecha : MonoBehaviour{
         if(tipo == TipoVegetal.Tomate){SetImagenSprite(1);}
         if(tipo == TipoVegetal.Patata){SetImagenSprite(2);}
         if(tipo == TipoVegetal.Zanahoria){SetImagenSprite(3);}
+        if(tipo == TipoVegetal.Naranja){SetImagenSprite(4);}
+        if(tipo == TipoVegetal.Arroz){SetImagenSprite(5);}
+        if(tipo == TipoVegetal.Trigo){SetImagenSprite(6);}
     }
 
     public void RecolectarCosecha(TipoVegetal tipo, int cantidad){
@@ -25,6 +28,9 @@ public class Cosecha : MonoBehaviour{
         if(tipo == TipoVegetal.Tomate){Hortalizas.hortalizas.GetCultivoPorPosicion(0).CantidadVegetal = Hortalizas.hortalizas.GetCultivoPorPosicion(0).CantidadVegetal + cantidad;}
         if(tipo == TipoVegetal.Patata){Hortalizas.hortalizas.GetCultivoPorPosicion(1).CantidadVegetal = Hortalizas.hortalizas.GetCultivoPorPosicion(1).CantidadVegetal + cantidad;}
         if(tipo == TipoVegetal.Zanahoria){Hortalizas.hortalizas.GetCultivoPorPosicion(2).CantidadVegetal = Hortalizas.hortalizas.GetCultivoPorPosicion(2).CantidadVegetal + cantidad;}
+        if(tipo == TipoVegetal.Naranja){Hortalizas.hortalizas.GetCultivoPorPosicion(3).CantidadVegetal = Hortalizas.hortalizas.GetCultivoPorPosicion(3).CantidadVegetal + cantidad;}
+        if(tipo == TipoVegetal.Arroz){Hortalizas.hortalizas.GetCultivoPorPosicion(4).CantidadVegetal = Hortalizas.hortalizas.GetCultivoPorPosicion(4).CantidadVegetal + cantidad;}
+        if(tipo == TipoVegetal.Trigo){Hortalizas.hortalizas.GetCultivoPorPosicion(5).CantidadVegetal = Hortalizas.hortalizas.GetCultivoPorPosicion(5).CantidadVegetal + cantidad;}
     }
 
 }

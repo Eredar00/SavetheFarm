@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour{
         ListaCultivos[0].GetComponent<Tomate>().Inicializar();
         ListaCultivos[1].GetComponent<Patata>().Inicializar();
         ListaCultivos[2].GetComponent<Zanahoria>().Inicializar();
+        ListaCultivos[3].GetComponent<Naranja>().Inicializar();
+        ListaCultivos[4].GetComponent<Arroz>().Inicializar();
+        ListaCultivos[5].GetComponent<Trigo>().Inicializar();
     }
 
     public Hortalizas GetHortalizas(){return hortalizas;}
@@ -202,7 +205,9 @@ public class GameManager : MonoBehaviour{
                     casilla.SetTipoCasilla(TipoCasilla.Arado_Seca);
 
                 }else if(casilla.GetTipoCasilla() == TipoCasilla.Plantado_Mojado){
-                    if(!casilla.GetPlanta().SigueRegada()){
+                    if(casilla.GetPlanta().SigueRegada()){
+                        casilla.SetTipoCasilla(TipoCasilla.Cultivado_Mojado);
+                    }else{
                         casilla.SetTipoCasilla(TipoCasilla.Cultivado_Seca);
                         planta.SetImagenSprite(0);
                     }

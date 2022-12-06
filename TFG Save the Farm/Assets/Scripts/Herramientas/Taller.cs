@@ -16,29 +16,33 @@ public class Taller : MonoBehaviour{
     }
     
     public void SetHerramienta(int numeroHerramientaNueva){
-        if(numeroHerramientaNueva == 6){
-            Lupaaaa(true);
+        // LUPA
+        if(numeroHerramientaNueva == 6 && GameManager.gameManager.ObtenerTileFocused() != null){
+            ActivarLupa(true);
         }else{
-            Lupaaaa(false);
+            ActivarLupa(false);
         }
 
         NumeroHerramientaActual = numeroHerramientaNueva;
         GameManager.gameManager.NumeroHerramienta = numeroHerramientaNueva;
 
+        // LIMPIAR COLORES
         for (int i = 0; i < _Herramientas.Length; i++){
             _Herramientas[i].GetComponentInChildren<Text>().color = Color.white;
         }
 
         _Herramientas[numeroHerramientaNueva-1].GetComponentInChildren<Text>().color = Color.cyan;
 
+        // CAMBIAR CASILLAS
+        Casillas.casillas.SetHerramientaActual(_Herramientas[numeroHerramientaNueva-1]);
+
+        // TEMA CASILLA
         Casilla casilla = GameManager.gameManager.ObtenerTileFocused();
 
         if(casilla != null){
             casilla.QuitarTodosLosFocus();
             casilla.CambiarTodosLosFocus(casilla);
-        } 
-
-        Casillas.casillas.SetHerramientaActual(_Herramientas[numeroHerramientaNueva-1]);
+        }         
     }
 
     public string ComprobarQueHighlightHerramienta(Casilla casilla, TipoCasilla tipoCasilla, int numHerramienta){
@@ -64,18 +68,15 @@ public class Taller : MonoBehaviour{
             
         }else if(numAccion == 2){
 
-            Sembrar(casillaRecibida);
+            Sembrar(casillaRecibida, costeEnergia);
 
         }else if(numAccion == 3){
+            
+            Regar(casillaRecibida, costeEnergia);
 
-            if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Tierra_Seca) {casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Mojada); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Seca) {casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Seca) {casillaRecibida.SetTipoCasilla(TipoCasilla.Plantado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Seca) {casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-        
         }else if(numAccion == 4){
 
-            Cosechar(casillaRecibida, plantaCasilla, cosechaCasilla);
+            Cosechar(casillaRecibida, plantaCasilla, cosechaCasilla, costeEnergia);
         
         }else if(numAccion == 5){
 
@@ -87,9 +88,7 @@ public class Taller : MonoBehaviour{
         }else if(numAccion == 6){}
     }
 
-    private void Sembrar(Casilla casillaRecibida){
-        int costeEnergia = GetHerramientaPorPosicion(_NumeroHerramientaActual).CosteHerramientaPE;
-
+    private void Sembrar(Casilla casillaRecibida, int costeEnergia){
         if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Seca || casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Mojado) {
             Cultivos vegetalPlantar = Semillas.semillas.GetVegetalPlantar();
 
@@ -106,36 +105,61 @@ public class Taller : MonoBehaviour{
                 }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Mojado){
                     casillaRecibida.SetTipoCasilla(TipoCasilla.Plantado_Mojado);
                 }
-                
             }
         }
     }
 
-    private void Cosechar(Casilla casillaRecibida, Planta plantaCasilla, Cosecha cosechaCasilla){
-        int costeEnergia = GetHerramientaPorPosicion(_NumeroHerramientaActual).CosteHerramientaPE;
+    private void Regar(Casilla casillaRecibida, int costeEnergia){
+        if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Tierra_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Mojada); 
+            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+        }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Mojado); 
+            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+        }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Plantado_Mojado); 
+            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+        }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Mojado); 
+            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+        }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Cosecha_Mojado); 
+            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+        }
+    }
 
+    private void Cosechar(Casilla casillaRecibida, Planta plantaCasilla, Cosecha cosechaCasilla, int costeEnergia){
         if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Seca || casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Mojado){
             cosechaCasilla.RecolectarCosecha(plantaCasilla.GetTipoVegetal(), plantaCasilla.CantidadCosecha); 
             GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
             if(plantaCasilla.CosechaReiterativa){
                 plantaCasilla.PuntosCosechaReiterativa = 0;
+                if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Seca){casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Seca);}
+                if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Mojado) {casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Mojado); }
             }else{
                 plantaCasilla.EliminarPlanta(); 
+                if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Seca){casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Seca);}
+                if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Mojado) {casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Mojada); }
             }
-            if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Seca){casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Seca);}
-            if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Mojado) {casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Mojado); }
+            
         }
     }
     
     public int NumeroHerramientaActual { get => _NumeroHerramientaActual; set => _NumeroHerramientaActual = value; }
 
-    public void Lupaaaa(bool valor){
+    public void ActivarLupa(bool valor){
         if(valor){
             GameManager.gameManager.InfoCasilla.SetActive(true);
+
+            TipoCasilla tipo = GameManager.gameManager.CasillaFocus.GetTipoCasilla();
+            string estaRegada = "No está regada";
+            if(tipo == TipoCasilla.Tierra_Mojada || tipo == TipoCasilla.Arado_Mojado || tipo == TipoCasilla.Cultivado_Mojado || tipo == TipoCasilla.Plantado_Mojado || tipo == TipoCasilla.Cosecha_Mojado){
+                estaRegada = "Si está regada";
+            }
             if(GameManager.gameManager.CasillaFocus != null){
-                GameManager.gameManager.InfoCasilla.transform.Find("Tipo").GetComponent<Text>().text = GameManager.gameManager.CasillaFocus.GetTipoCasilla().ToString();
+                GameManager.gameManager.InfoCasilla.transform.Find("Regada").GetComponent<Text>().text = estaRegada;
             }else{
-                GameManager.gameManager.InfoCasilla.transform.Find("Tipo").GetComponent<Text>().text = "Sin casilla";
+                GameManager.gameManager.InfoCasilla.transform.Find("Regada").GetComponent<Text>().text = "Sin casilla";
             }
             
         }else{

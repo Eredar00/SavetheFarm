@@ -15,7 +15,7 @@ public class Patata : Cultivos{
         Imagen = ImagenesManager.iMan.GetImagenesCosecha()[2];
 
         PuntosCrecimiento = 0;
-        PuntosParaCosecha = 5;
+        PuntosParaCosecha = 4;
     
         ProbabilidadSeguirRegada = 10;
 
@@ -27,7 +27,7 @@ public class Patata : Cultivos{
         CantidadSemillas = 0;
         CantidadVegetal = 0;
         PrecioSemillas = 1.0f;
-        PrecioVenta = 2.5f;
+        PrecioVenta = 1.5f;
 
         ActualizarTextoMenu01();
     }

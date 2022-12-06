@@ -198,14 +198,14 @@ public class Casilla : MonoBehaviour{
         CambiarTodosLosFocus(this);
         
         if(GameManager.gameManager.NumeroHerramienta == 6){
-            GameManager.gameManager.GetTaller().Lupaaaa(true);
+            GameManager.gameManager.GetTaller().ActivarLupa(true);
         }
 
     }
 
     private void OnMouseExit() {
         GameManager.gameManager.CambiarTileFocused(null);
-        GameManager.gameManager.GetTaller().Lupaaaa(false);
+        GameManager.gameManager.GetTaller().ActivarLupa(false);
         QuitarTodosLosFocus();
     }
 

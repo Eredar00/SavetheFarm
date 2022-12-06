@@ -17,7 +17,7 @@ public class Zanahoria : Cultivos{
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 5;
     
-        ProbabilidadSeguirRegada = 10;
+        ProbabilidadSeguirRegada = 5;
 
         CantidadCosechaMin = 1; 
         CantidadCosechaMax = 3;    
@@ -27,7 +27,7 @@ public class Zanahoria : Cultivos{
         CantidadSemillas = 0;
         CantidadVegetal = 0;
         PrecioSemillas = 1.0f;
-        PrecioVenta = 2.5f;
+        PrecioVenta = 3.0f;
 
         ActualizarTextoMenu01();
     }

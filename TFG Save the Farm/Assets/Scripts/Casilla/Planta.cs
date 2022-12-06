@@ -7,7 +7,10 @@ public enum TipoVegetal{
         Ninguno,
         Tomate,
         Patata,
-        Zanahoria
+        Zanahoria,
+        Naranja,
+        Arroz,
+        Trigo
     }
 
 public class Planta : MonoBehaviour{
@@ -37,6 +40,9 @@ public class Planta : MonoBehaviour{
         if(_TipoVegetal == TipoVegetal.Tomate){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(0);}
         else if(_TipoVegetal == TipoVegetal.Patata){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(1);}
         else if(_TipoVegetal == TipoVegetal.Zanahoria){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(2);}
+        else if(_TipoVegetal == TipoVegetal.Naranja){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(3);}
+        else if(_TipoVegetal == TipoVegetal.Arroz){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(4);}
+        else if(_TipoVegetal == TipoVegetal.Trigo){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(5);}
         else{cultivo = null;}
 
         _PuntosParaCosecha = cultivo.PuntosParaCosecha;
@@ -105,6 +111,9 @@ public class Planta : MonoBehaviour{
         else if(vegetal.Nombre == "Tomate"){_TipoVegetal = TipoVegetal.Tomate; Inicializar();}
         else if(vegetal.Nombre == "Patata"){_TipoVegetal = TipoVegetal.Patata; Inicializar();}
         else if(vegetal.Nombre == "Zanahoria"){_TipoVegetal = TipoVegetal.Zanahoria; Inicializar();}
+        else if(vegetal.Nombre == "Naranja"){_TipoVegetal = TipoVegetal.Naranja; Inicializar();}
+        else if(vegetal.Nombre == "Arroz"){_TipoVegetal = TipoVegetal.Arroz; Inicializar();}
+        else if(vegetal.Nombre == "Trigo"){_TipoVegetal = TipoVegetal.Trigo; Inicializar();}
     }
 
     public TipoVegetal GetTipoVegetal(){return _TipoVegetal;}
