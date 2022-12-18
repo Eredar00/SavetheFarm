@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BloqueCasillas : MonoBehaviour
-{
+public class BloqueCasillas : MonoBehaviour{
+
+    public int _ID;
     private Vector2 _Posicion;
     private float _Precio;
     private Text _TextoPrecio;
     private GameObject _ObjetoCandado;
+    private SpriteRenderer _SpriteRenderer;
+
+    public int ID { get => _ID; set => _ID = value; }
+
+    private void Awake() {
+        _ObjetoCandado = transform.Find("Candado").gameObject;
+        _SpriteRenderer = _ObjetoCandado.GetComponent<SpriteRenderer>();
+        _TextoPrecio = transform.GetComponentInChildren<Text>();
+    }
 
     private void Start() {
-        _TextoPrecio = transform.GetComponentInChildren<Text>();
-        _ObjetoCandado = transform.Find("Candado").gameObject;
         _TextoPrecio.text = _Precio.ToString()+ " $";
     }
 
@@ -21,9 +29,9 @@ public class BloqueCasillas : MonoBehaviour
         if(GameManager.gameManager.canvas == true){OnMouseExit(); return;}
         
         if(Dinero.dinero.ObtenerDinero() >= _Precio){
-            _ObjetoCandado.GetComponent<SpriteRenderer>().color = Color.green;
+            _SpriteRenderer.color = Color.green;
         }else{
-            _ObjetoCandado.GetComponent<SpriteRenderer>().color = Color.red;
+            _SpriteRenderer.color = Color.red;
         }       
         _TextoPrecio.enabled = true;
     }
@@ -37,8 +45,9 @@ public class BloqueCasillas : MonoBehaviour
         if(GameManager.gameManager.pausa == true || GameManager.gameManager.canvas == true) return;
         if(Dinero.dinero.ObtenerDinero() >= _Precio){
             Dinero.dinero.VariarDinero(-_Precio);
-            ConvertirCasillas();
             Destroy(this.gameObject);
+            ConvertirCasillas();
+            EstadoJuego.EdJ._Bloques[_ID] = true;
         }
     }
 
@@ -50,26 +59,45 @@ public class BloqueCasillas : MonoBehaviour
         _Posicion = new Vector2(x, y);
     }
 
+    public void QuitarBloquesYaDesbloqueados(){
+        Destroy(this.gameObject);
+
+        Casilla casillaCentral = GridManager.gridManager.GetTileAtPosition(_Posicion);
+        ActualizarCasillas(casillaCentral);
+        ActualizarCasillas(casillaCentral.GetCasilla_Abajo());
+        ActualizarCasillas(casillaCentral.GetCasilla_Izquierda());
+        ActualizarCasillas(casillaCentral.GetCasilla_Derecha());
+        ActualizarCasillas(casillaCentral.GetCasilla_Arriba());
+        ActualizarCasillas(casillaCentral.GetCasilla_Abajo().GetCasilla_Izquierda());
+        ActualizarCasillas(casillaCentral.GetCasilla_Abajo().GetCasilla_Derecha());
+        ActualizarCasillas(casillaCentral.GetCasilla_Arriba().GetCasilla_Izquierda());
+        ActualizarCasillas(casillaCentral.GetCasilla_Arriba().GetCasilla_Derecha());
+
+        EstadoJuego.EdJ._Bloques[_ID] = true;
+    }
+
     private void ConvertirCasillas(){
         Casilla casillaCentral = GridManager.gridManager.GetTileAtPosition(_Posicion);
 
-        casillaCentral.SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Abajo().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Izquierda().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Derecha().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Arriba().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Abajo().GetCasilla_Izquierda().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Abajo().GetCasilla_Derecha().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Arriba().GetCasilla_Izquierda().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.GetCasilla_Arriba().GetCasilla_Derecha().SetTipoCasilla(TipoCasilla.Tierra_Seca);
-        casillaCentral.ActivarCollider();
-        casillaCentral.GetCasilla_Abajo().ActivarCollider();
-        casillaCentral.GetCasilla_Izquierda().ActivarCollider();
-        casillaCentral.GetCasilla_Derecha().ActivarCollider();
-        casillaCentral.GetCasilla_Arriba().ActivarCollider();
-        casillaCentral.GetCasilla_Abajo().GetCasilla_Izquierda().ActivarCollider();
-        casillaCentral.GetCasilla_Abajo().GetCasilla_Derecha().ActivarCollider();
-        casillaCentral.GetCasilla_Arriba().GetCasilla_Izquierda().ActivarCollider();
-        casillaCentral.GetCasilla_Arriba().GetCasilla_Derecha().ActivarCollider();
+        DesbloquearCasillas(casillaCentral);
+        DesbloquearCasillas(casillaCentral.GetCasilla_Abajo());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Izquierda());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Derecha());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Arriba());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Abajo().GetCasilla_Izquierda());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Abajo().GetCasilla_Derecha());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Arriba().GetCasilla_Izquierda());
+        DesbloquearCasillas(casillaCentral.GetCasilla_Arriba().GetCasilla_Derecha());
+    }
+
+    private void ActualizarCasillas(Casilla casilla){
+        casilla.TipoCasilla = TipoCasilla.Tierra_Seca;
+        casilla.SetImagenSprite(1);
+        casilla.ActivarCollider();
+    }
+
+    private void DesbloquearCasillas(Casilla casilla){
+        casilla.SetTipoCasilla(TipoCasilla.Tierra_Seca);
+        casilla.ActivarCollider();
     }
 }

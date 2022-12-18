@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bolsa : Herramienta{
@@ -13,16 +11,26 @@ public class Bolsa : Herramienta{
         TeclaHerramienta = KeyCode.Alpha2;
 
         ImagenesHerramienta = ImagenesHerramienta = ImagenesManager.iMan.GetImagenesBolsa();
-        NombreHerramienta = "Bolsa";
-        DescripcionHerramienta = "Se usa para plantar semillas.";
+        
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            NombreHerramienta = "Bossa de llavors";
+            DescripcionHerramienta = "Es fa servir per guardar llavors i poder plantar-les.";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            NombreHerramienta = "Bolsa de semillas";
+            DescripcionHerramienta = "Se usa para guardar semillas y poder plantarlas.";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            NombreHerramienta = "Seed bag";
+            DescripcionHerramienta = "It is used to store seeds and be able to plant them.";
+        }
 
-        NivelHerramientaPE = 1;
+        NivelHerramientaPE = EstadoJuego.EdJ._Herramientas[1, 0];
         MaxNivelHerramientaPE = 10;
 
-        NivelHerramientaCasillas = 1;
+        NivelHerramientaCasillas = EstadoJuego.EdJ._Herramientas[1, 1];
         MaxNivelHerramientaCasillas = 4;
 
         CosteBasePE = 11;
         ActualizarCosteAccionPE();
+        CambiarImagen();
     }
 }

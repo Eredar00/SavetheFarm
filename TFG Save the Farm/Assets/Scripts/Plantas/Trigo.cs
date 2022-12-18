@@ -11,9 +11,19 @@ public class Trigo : Cultivos{
     
     public void Inicializar(){
         
-        Nombre = "Trigo";
-        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[6];
+        NombreClave = "Trigo";
 
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            Nombre = "Blat";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            Nombre = "Trigo";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            Nombre = "Wheat";
+        }
+
+        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[6];
+        NumeroCultivo = 6;
+        
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 6;
     
@@ -24,8 +34,8 @@ public class Trigo : Cultivos{
         CosechaReiterativa = false;
         TiempoCosechaReiterativa = 0;
 
-        CantidadSemillas = 0;
-        CantidadVegetal = 0;
+        CantidadSemillas = EstadoJuego.EdJ._Vegetales[5, 0];
+        CantidadVegetal = EstadoJuego.EdJ._Vegetales[5, 1];
         PrecioSemillas = 2.0f;
         PrecioVenta = 6.5f;
 

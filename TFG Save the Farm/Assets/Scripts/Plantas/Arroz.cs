@@ -11,9 +11,19 @@ public class Arroz : Cultivos{
     
     public void Inicializar(){
         
-        Nombre = "Arroz";
-        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[5];
+        NombreClave = "Arroz";
 
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            Nombre = "Arròs";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            Nombre = "Arroz";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            Nombre = "Rice";
+        }
+
+        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[5];
+        NumeroCultivo = 5;
+        
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 3;
     
@@ -24,8 +34,8 @@ public class Arroz : Cultivos{
         CosechaReiterativa = false;
         TiempoCosechaReiterativa = 0;
 
-        CantidadSemillas = 0;
-        CantidadVegetal = 0;
+        CantidadSemillas = EstadoJuego.EdJ._Vegetales[4, 0];
+        CantidadVegetal = EstadoJuego.EdJ._Vegetales[4, 1];
         PrecioSemillas = 0.5f;
         PrecioVenta = 1.0f;
 

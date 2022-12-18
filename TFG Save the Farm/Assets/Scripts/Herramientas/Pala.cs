@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pala : Herramienta{
@@ -13,13 +11,22 @@ public class Pala : Herramienta{
         TeclaHerramienta = KeyCode.Alpha1;
 
         ImagenesHerramienta = ImagenesManager.iMan.GetImagenesPala();
-        NombreHerramienta = "Pala";
-        DescripcionHerramienta = "Se usa para cavar.";
+        
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            NombreHerramienta = "Pala";
+            DescripcionHerramienta = "S'usa per llaurar la terra i poder plantar llavors.";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            NombreHerramienta = "Pala";
+            DescripcionHerramienta = "Se usa para arar la tierra y poder plantar semillas.";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            NombreHerramienta = "Shovel";
+            DescripcionHerramienta = "It is used to plow the land and be able to plant seeds.";
+        }
 
-        NivelHerramientaPE = 1;
+        NivelHerramientaPE = EstadoJuego.EdJ._Herramientas[0, 0];
         MaxNivelHerramientaPE = 10;
 
-        NivelHerramientaCasillas = 1;
+        NivelHerramientaCasillas = EstadoJuego.EdJ._Herramientas[0, 1];
         MaxNivelHerramientaCasillas = 4;
 
         CosteBasePE = 11;

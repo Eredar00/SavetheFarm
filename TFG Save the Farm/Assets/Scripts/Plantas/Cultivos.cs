@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class Cultivos : MonoBehaviour, IPointerClickHandler{
 
+    private string _NombreClave;
     private string _Nombre;
     private Sprite _Imagen;
+    private int _NumeroCultivo;
     
     private int _PuntosCrecimiento;
     private int _PuntosParaCosecha;
@@ -36,10 +38,11 @@ public class Cultivos : MonoBehaviour, IPointerClickHandler{
     public int CantidadVegetal { get => _CantidadVegetal; set => _CantidadVegetal = value; }
     public float PrecioSemillas { get => _PrecioSemillas; set => _PrecioSemillas = value; }
     public float PrecioVenta { get => _PrecioVenta; set => _PrecioVenta = value; }
-    
+    public int NumeroCultivo { get => _NumeroCultivo; set => _NumeroCultivo = value; }
+    public string NombreClave { get => _NombreClave; set => _NombreClave = value; }
 
     public void OnPointerClick(PointerEventData eventData){
-        ControlBotones.controlBotones.getTiendaHortalizas().GetComponent<Tienda_Hortalizas>().ActualizarTextoMenu02(this);
+        ControlBotones.controlBotones.getTiendaHortalizas().GetComponent<TiendaHortalizas>().ActualizarTextoMenu02(this);
     }
 
     public void ActualizarTextoMenu01(){
@@ -49,7 +52,23 @@ public class Cultivos : MonoBehaviour, IPointerClickHandler{
         transform.Find("Nombre").GetComponent<Text>().text = Nombre;
     }
 
-    
+    public void ComprarSemillas(int cantidad){
+        _CantidadSemillas = _CantidadSemillas + cantidad;
+        EstadoJuego.EdJ._Vegetales[NumeroCultivo - 1, 0] = _CantidadSemillas;
+    }
 
-    
+    public void VenderVegetal(int cantidad){
+        _CantidadVegetal = _CantidadVegetal - cantidad;
+        EstadoJuego.EdJ._Vegetales[NumeroCultivo - 1, 1] = _CantidadVegetal;
+    }  
+
+    public void RestarVegetal(){
+        _CantidadSemillas = _CantidadSemillas - 1;
+        EstadoJuego.EdJ._Vegetales[NumeroCultivo - 1, 0] = _CantidadSemillas;
+    }  
+
+    public void SumarVegetales(int cantidad){
+        _CantidadVegetal = _CantidadVegetal + cantidad;
+        EstadoJuego.EdJ._Vegetales[NumeroCultivo - 1, 1] = _CantidadVegetal;
+    } 
 }

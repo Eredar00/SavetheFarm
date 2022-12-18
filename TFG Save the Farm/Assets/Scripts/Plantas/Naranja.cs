@@ -11,9 +11,19 @@ public class Naranja : Cultivos{
     
     public void Inicializar(){
         
-        Nombre = "Naranja";
-        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[4];
+        NombreClave = "Naranja";
 
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            Nombre = "Taronja";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            Nombre = "Naranja";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            Nombre = "Orange";
+        }
+        
+        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[4];
+        NumeroCultivo = 4;
+        
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 8;
     
@@ -24,8 +34,8 @@ public class Naranja : Cultivos{
         CosechaReiterativa = true;
         TiempoCosechaReiterativa = 4;
 
-        CantidadSemillas = 0;
-        CantidadVegetal = 0;
+        CantidadSemillas = EstadoJuego.EdJ._Vegetales[3, 0];
+        CantidadVegetal = EstadoJuego.EdJ._Vegetales[3, 1];
         PrecioSemillas = 10.0f;
         PrecioVenta = 30f;
 

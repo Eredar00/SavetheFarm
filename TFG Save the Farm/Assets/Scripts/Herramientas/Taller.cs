@@ -34,7 +34,7 @@ public class Taller : MonoBehaviour{
         _Herramientas[numeroHerramientaNueva-1].GetComponentInChildren<Text>().color = Color.cyan;
 
         // CAMBIAR CASILLAS
-        Casillas.casillas.SetHerramientaActual(_Herramientas[numeroHerramientaNueva-1]);
+        CasillasHerramienta.casillasHerramienta.SetHerramientaActual(_Herramientas[numeroHerramientaNueva-1]);
 
         // TEMA CASILLA
         Casilla casilla = GameManager.gameManager.ObtenerTileFocused();
@@ -97,7 +97,9 @@ public class Taller : MonoBehaviour{
             }else{
                 GameManager.gameManager.VariarPuntosEnergia(-costeEnergia);
                 casillaRecibida.GetPlanta().SetTipoVegetal(vegetalPlantar);
-                vegetalPlantar.CantidadSemillas = vegetalPlantar.CantidadSemillas - 1;
+
+                vegetalPlantar.RestarVegetal();
+
                 Semillas.semillas.ActualizarTextoNumero();
                 
                 if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Seca){
@@ -148,18 +150,40 @@ public class Taller : MonoBehaviour{
     public int NumeroHerramientaActual { get => _NumeroHerramientaActual; set => _NumeroHerramientaActual = value; }
 
     public void ActivarLupa(bool valor){
+        string[] _CAT_Text = {
+            "No està regada",
+            "Si està regada",
+            "Sense casella"
+        };
+
+        string[] _ESP_Text = {
+            "No está regada",
+            "Si está regada",
+            "Sin casilla"
+        };
+
+        string[] _ENG_Text = {
+            "It is not watered",
+            "It's watered",
+            "No tile"
+        };
+        string[] _Textos = null;
+        if(EstadoJuego.EdJ.Lang == "CAT"){_Textos = _CAT_Text;}
+        else if(EstadoJuego.EdJ.Lang == "ESP"){_Textos = _ESP_Text;}
+        else if(EstadoJuego.EdJ.Lang == "ENG"){_Textos = _ENG_Text;}
+
         if(valor){
             GameManager.gameManager.InfoCasilla.SetActive(true);
 
             TipoCasilla tipo = GameManager.gameManager.CasillaFocus.GetTipoCasilla();
-            string estaRegada = "No está regada";
+            string estaRegada = _Textos[0];
             if(tipo == TipoCasilla.Tierra_Mojada || tipo == TipoCasilla.Arado_Mojado || tipo == TipoCasilla.Cultivado_Mojado || tipo == TipoCasilla.Plantado_Mojado || tipo == TipoCasilla.Cosecha_Mojado){
-                estaRegada = "Si está regada";
+                estaRegada = _Textos[1];
             }
             if(GameManager.gameManager.CasillaFocus != null){
                 GameManager.gameManager.InfoCasilla.transform.Find("Regada").GetComponent<Text>().text = estaRegada;
             }else{
-                GameManager.gameManager.InfoCasilla.transform.Find("Regada").GetComponent<Text>().text = "Sin casilla";
+                GameManager.gameManager.InfoCasilla.transform.Find("Regada").GetComponent<Text>().text = _Textos[2];
             }
             
         }else{

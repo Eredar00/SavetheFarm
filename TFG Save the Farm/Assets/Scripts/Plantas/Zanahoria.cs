@@ -11,9 +11,19 @@ public class Zanahoria : Cultivos{
     
     public void Inicializar(){
         
-        Nombre = "Zanahoria";
-        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[3];
+        NombreClave = "Zanahoria";
 
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            Nombre = "Pastanaga";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            Nombre = "Zanahoria";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            Nombre = "Carrot";
+        }
+
+        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[3];
+        NumeroCultivo = 3;
+        
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 5;
     
@@ -24,8 +34,8 @@ public class Zanahoria : Cultivos{
         CosechaReiterativa = false;
         TiempoCosechaReiterativa = 0;
 
-        CantidadSemillas = 0;
-        CantidadVegetal = 0;
+        CantidadSemillas = EstadoJuego.EdJ._Vegetales[2, 0];
+        CantidadVegetal = EstadoJuego.EdJ._Vegetales[2, 1];
         PrecioSemillas = 1.0f;
         PrecioVenta = 3.0f;
 

@@ -168,6 +168,10 @@ public class GameManager : MonoBehaviour{
                 pausa = true;
                 GridManager.gridManager.GenerateGrid();
                 break;
+            case GameState.CargarDatos:
+                GridManager.gridManager.CargarBloquesCasillas();
+                ChangeState(GameManager.GameState.JuegoEnMarcha);
+                break;
             case GameState.CambiarDia:
                 pausa = true;
                 puntosEnergia.LlenarPE();
@@ -184,9 +188,13 @@ public class GameManager : MonoBehaviour{
             default:
                 throw new ArgumentOutOfRangeException(nameof(nuevoEstado), nuevoEstado, null);
         }
-        
-        
     }
+
+
+
+
+
+
 
     // Otras funciones
 
@@ -236,6 +244,7 @@ public class GameManager : MonoBehaviour{
     // Enum con los nombres de los estados posibles que hay en el juego
     public enum GameState{
         GenerarMapa,
+        CargarDatos,
         CambiarDia,
         Pausa,
         JuegoEnMarcha

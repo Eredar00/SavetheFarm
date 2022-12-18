@@ -13,17 +13,27 @@ public class Cesta : Herramienta{
         TeclaHerramienta = KeyCode.Alpha4;
 
         ImagenesHerramienta = ImagenesHerramienta = ImagenesManager.iMan.GetImagenesCesta();
-        NombreHerramienta = "Cesta";
-        DescripcionHerramienta = "Se usa para cosechar.";
+        
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            NombreHerramienta = "Cistella";
+            DescripcionHerramienta = "Es fa servir per recollir la collita d'un cultiu.";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            NombreHerramienta = "Cesta";
+            DescripcionHerramienta = "Se usa para recoger la cosecha de un cultivo.";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            NombreHerramienta = "Basket";
+            DescripcionHerramienta = "It is used to collect the harvest of a crop.";
+        }
 
-        NivelHerramientaPE = 1;
+        NivelHerramientaPE = EstadoJuego.EdJ._Herramientas[3, 0];
         MaxNivelHerramientaPE = 10;
 
-        NivelHerramientaCasillas = 1;
+        NivelHerramientaCasillas = EstadoJuego.EdJ._Herramientas[3, 1];
         MaxNivelHerramientaCasillas = 4;
 
         CosteBasePE = 11;
         ActualizarCosteAccionPE();
+        CambiarImagen();
     }
 }
 

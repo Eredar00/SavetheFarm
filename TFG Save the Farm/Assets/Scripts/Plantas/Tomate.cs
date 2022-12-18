@@ -9,11 +9,21 @@ public class Tomate : Cultivos{
          Inicializar();
     }
 
-    
     public void Inicializar(){
-        Nombre = "Tomate";
-        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[1];
 
+        NombreClave = "Tomate";
+
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            Nombre = "Tomàquet";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            Nombre = "Tomate";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            Nombre = "Tomato";
+        }
+
+        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[1];
+        NumeroCultivo = 1;
+        
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 7;
     
@@ -24,8 +34,8 @@ public class Tomate : Cultivos{
         CosechaReiterativa = true;
         TiempoCosechaReiterativa = 4;
 
-        CantidadSemillas = 0;
-        CantidadVegetal = 0;
+        CantidadSemillas = EstadoJuego.EdJ._Vegetales[0, 0];
+        CantidadVegetal = EstadoJuego.EdJ._Vegetales[0, 1];
         PrecioSemillas = 1.0f;
         PrecioVenta = 3.0f;
         

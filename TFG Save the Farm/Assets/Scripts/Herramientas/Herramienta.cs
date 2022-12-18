@@ -52,4 +52,16 @@ public class Herramienta : MonoBehaviour, IPointerDownHandler{
         transform.Find("Imagen").GetComponent<Image>().sprite = _ImagenesHerramienta[NivelHerramientaCasillas-1]; 
     }
 
+    public void MejorarNivelHerramientaPE(){
+        NivelHerramientaPE = NivelHerramientaPE + 1;
+        EstadoJuego.EdJ._Herramientas[NumeroHerramienta - 1, 0] = NivelHerramientaPE;
+        ActualizarCosteAccionPE();
+    }
+
+    public void MejorarNivelHerramientaCasillas(){
+        NivelHerramientaCasillas = NivelHerramientaCasillas + 1;
+        EstadoJuego.EdJ._Herramientas[NumeroHerramienta - 1, 1] = NivelHerramientaCasillas;
+        CambiarImagen();
+    }
+
 }

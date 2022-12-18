@@ -7,57 +7,64 @@ using UnityEngine.UI;
 
 public class Calendario : MonoBehaviour, IPointerDownHandler{
     
-    [SerializeField] private Text textoDia;
-    [SerializeField] private int dia;
-
-    [SerializeField] GameObject[] dias;
-    private Sprite cruz;
-    private bool finalJuego;
+    [SerializeField] private Text _TextoDia;
+    [SerializeField] GameObject[] _Dias;
+    private Sprite _Cruz;
 
     private void Start() {
-        cruz = Resources.Load<Sprite>("Sprites/Calendario/Cruz");
-        
-        dia = 1;
+        _Cruz = Resources.Load<Sprite>("Sprites/Calendario/Cruz");
         ActualizarTextoDia();
-        dias[dia-1].GetComponentInChildren<Image>().color = new Color(0,255,0,255);
-        finalJuego = false;
+        if(EstadoJuego.EdJ._Dia == 1){
+            _Dias[EstadoJuego.EdJ._Dia-1].GetComponentInChildren<Image>().color = new Color(0,255,0,255);
+        }else{
+            CargarCalendario();
+        }
     }
 
     private void ActualizarTextoDia(){
-        textoDia.text = "Día " + dia.ToString();
+        _TextoDia.text = transform.GetComponentInParent<TextosJuego>().GetTexto(1) + " " + EstadoJuego.EdJ._Dia.ToString();
     }
 
     public void SumarDia(){
         RevisarEstadoDias();
-        if(!finalJuego){
-            tachar();
-            dia++;
+        if(EstadoJuego.EdJ.FinalJuego == ""){
+            TacharDias();
+            EstadoJuego.EdJ._Dia++;
+            EstadoJuego.EdJ.Guardar();
             ActualizarTextoDia();
         }
     }
 
-    private void tachar(){
-        dias[dia-1].GetComponentInChildren<Image>().sprite = cruz;
-        dias[dia-1].GetComponentInChildren<Image>().color = new Color(255,255,255,255);
-        dias[dia].GetComponentInChildren<Image>().color = new Color(0,255,0,255);
+    private void CargarCalendario(){
+        for (int i = 1; i < EstadoJuego.EdJ._Dia; i++){
+            _Dias[i-1].GetComponentInChildren<Image>().sprite = _Cruz;
+            _Dias[i-1].GetComponentInChildren<Image>().color = new Color(255,255,255,255);
+            _Dias[i].GetComponentInChildren<Image>().color = new Color(0,255,0,255);
+        }
+    }
+
+    private void TacharDias(){
+        _Dias[EstadoJuego.EdJ._Dia-1].GetComponentInChildren<Image>().sprite = _Cruz;
+        _Dias[EstadoJuego.EdJ._Dia-1].GetComponentInChildren<Image>().color = new Color(255,255,255,255);
+        _Dias[EstadoJuego.EdJ._Dia].GetComponentInChildren<Image>().color = new Color(0,255,0,255);
     }
 
     private void RevisarEstadoDias(){
-        if(dia == 14){
+        if(EstadoJuego.EdJ._Dia == 14){
             if(Dinero.dinero.ObtenerDinero() >= 100){
                 Dinero.dinero.VariarDinero(-100);
             }else{
-                finalJuego = true;
-                SceneManager.LoadScene("Game Over");
+                EstadoJuego.EdJ.FinalJuego = "Game Over";
+                SceneManager.LoadScene("Final del Juego");
             }
-        }else if(dia == 28){
+        }else if(EstadoJuego.EdJ._Dia == 28){
             if(Dinero.dinero.ObtenerDinero() >= 200){
                 Dinero.dinero.VariarDinero(-200);
-                finalJuego = true;
-                SceneManager.LoadScene("Ganador");
+                EstadoJuego.EdJ.FinalJuego = "Win";
+                SceneManager.LoadScene("Final del Juego");
             }else{
-                finalJuego = true;
-                SceneManager.LoadScene("Game Over");
+                EstadoJuego.EdJ.FinalJuego = "Game Over";
+                SceneManager.LoadScene("Final del Juego");
             }
         }
     }

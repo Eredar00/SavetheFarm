@@ -20,21 +20,25 @@ public class Casilla : MonoBehaviour{
     
     private GameObject _SeleccionIncorrecta, _SeleccionNoPE, _Seleccion;
     [SerializeField] private TipoCasilla _TipoCasilla;
-    private Sprite[] _ImagenesCasilla;
-    private BoxCollider2D _Collider2D;
+    public BoxCollider2D _Collider2D;
     public int _PosX, _PosY;
     public Casilla _Casilla_Arriba, _Casilla_Abajo, _Casilla_Derecha, _Casilla_Izquierda;
     private Planta _Planta;
     private Cosecha _Cosecha;
-    
+
+    public TipoCasilla TipoCasilla { get => _TipoCasilla; set => _TipoCasilla = value; }
+
+    private void Awake() {
+        _Collider2D = GetComponent<BoxCollider2D>();
+        _Planta = GetComponentInChildren<Planta>();
+        _Cosecha = GetComponentInChildren<Cosecha>();
+    }
+
     private void Start() {
         _SeleccionIncorrecta = transform.Find("CruzRoja").gameObject;
         _SeleccionNoPE = transform.Find("CruzNegra").gameObject;
         _Seleccion = transform.Find("Seleccion").gameObject;
-        _ImagenesCasilla = ImagenesManager.iMan.GetImagenesCasilla();
-        _Collider2D = GetComponent<BoxCollider2D>();
-        _Planta = GetComponentInChildren<Planta>();
-        _Cosecha = GetComponentInChildren<Cosecha>();
+       
     }
     
     public void SetCasillasLados(){
@@ -61,23 +65,51 @@ public class Casilla : MonoBehaviour{
         _PosY = y;
     }
 
-    private void SetImagenSprite(int numero){ transform.GetComponent<SpriteRenderer>().sprite = _ImagenesCasilla[numero]; }
+    public void SetImagenSprite(int numero){ 
+        transform.GetComponent<SpriteRenderer>().sprite = ImagenesManager.iMan.GetImagenesCasilla()[numero]; 
+    }
     
     public void ActivarCollider(){ _Collider2D.enabled = true; }
 
     public Planta GetPlanta(){ return _Planta; }
     public Cosecha GetCosecha() { return _Cosecha; }
     
-    public TipoCasilla GetTipoCasilla(){ return _TipoCasilla; }
-    
-    public void SetPreTipoCasilla(TipoCasilla Nuevo_TipoCasilla){
-        _TipoCasilla = Nuevo_TipoCasilla;
+    public TipoCasilla GetTipoCasilla(){ return TipoCasilla; }
+
+    public int GetTipoCasillaNumerico(){ 
+        switch (TipoCasilla){
+            case TipoCasilla.Bloqueado:
+                return 0;
+            case TipoCasilla.Tierra_Seca:
+                return 1;
+            case TipoCasilla.Tierra_Mojada:
+                return 2;
+            case TipoCasilla.Arado_Seca:
+                return 3;
+            case TipoCasilla.Arado_Mojado:
+                return 4;
+            case TipoCasilla.Plantado_Seca:
+                return 5;
+            case TipoCasilla.Plantado_Mojado:
+                return 6;
+            case TipoCasilla.Cultivado_Seca:
+                return 7;
+            case TipoCasilla.Cultivado_Mojado:
+                return 8;
+            case TipoCasilla.Cosecha_Seca:
+                return 9;
+            case TipoCasilla.Cosecha_Mojado:
+                return 10;
+            default:
+                return 99;
+        }
     }
-    
+
     public void SetTipoCasilla(TipoCasilla Nuevo_TipoCasilla){
-        _TipoCasilla = Nuevo_TipoCasilla;
-        
-        switch (_TipoCasilla){
+        TipoCasilla = Nuevo_TipoCasilla;
+        EstadoJuego.EdJ._Casillero[_PosX * 9 + _PosY, 0] =  GetTipoCasillaNumerico();
+
+        switch (TipoCasilla){
             case TipoCasilla.Bloqueado:
                 SetImagenSprite(0);
                 break;
@@ -113,7 +145,47 @@ public class Casilla : MonoBehaviour{
                 break;
             default:
                 break;
-        }  
+        } 
+    }
+
+    public void SetTipoCasillaNumerico(int numero){        
+        switch (numero){
+            case 0:
+                SetTipoCasilla(TipoCasilla.Bloqueado);
+                break;
+            case 1:
+                SetTipoCasilla(TipoCasilla.Tierra_Seca);
+                break;
+            case 2:
+                SetTipoCasilla(TipoCasilla.Tierra_Mojada);
+                break;
+            case 3:
+                SetTipoCasilla(TipoCasilla.Arado_Seca);
+                break;
+            case 4:
+                SetTipoCasilla(TipoCasilla.Arado_Mojado);
+                break;
+            case 5:
+                SetTipoCasilla(TipoCasilla.Plantado_Seca);
+                break;
+            case 6:
+                SetTipoCasilla(TipoCasilla.Plantado_Mojado);
+                break;
+            case 7:
+                SetTipoCasilla(TipoCasilla.Cultivado_Seca);
+                break;
+            case 8:
+                SetTipoCasilla(TipoCasilla.Cultivado_Mojado);
+                break;
+            case 9:
+                SetTipoCasilla(TipoCasilla.Cosecha_Seca);
+                break;
+            case 10:
+                SetTipoCasilla(TipoCasilla.Cosecha_Mojado);
+                break;
+            default:
+                break;
+        }
     }
 
     public void QuitarFocusCasilla(){
@@ -153,21 +225,21 @@ public class Casilla : MonoBehaviour{
 
         if(casillaCentral.GetTipoCasilla() == TipoCasilla.Bloqueado) return;
 
-        if(Casillas.casillas.getNumero() == 0) casillaCentral.CambiarFocusCasilla();
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 0) casillaCentral.CambiarFocusCasilla();
         
-        if(Casillas.casillas.getNumero() == 1){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 1){
             casillaCentral.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Arriba != null) casillaCentral._Casilla_Arriba.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Abajo != null) casillaCentral._Casilla_Abajo.CambiarFocusCasilla();
         }
 
-        if(Casillas.casillas.getNumero() == 2){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 2){
             casillaCentral.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Derecha != null) casillaCentral._Casilla_Derecha.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Izquierda != null) casillaCentral._Casilla_Izquierda.CambiarFocusCasilla(); 
         }
 
-        if(Casillas.casillas.getNumero() == 3){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 3){
             casillaCentral.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Derecha != null) casillaCentral._Casilla_Derecha.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Izquierda != null) casillaCentral._Casilla_Izquierda.CambiarFocusCasilla(); 
@@ -175,7 +247,7 @@ public class Casilla : MonoBehaviour{
             if(casillaCentral._Casilla_Abajo != null) casillaCentral._Casilla_Abajo.CambiarFocusCasilla();
         }
 
-        if(Casillas.casillas.getNumero() == 4){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 4){
             casillaCentral.CambiarFocusCasilla();
             if(casillaCentral._Casilla_Arriba != null) {
                     casillaCentral._Casilla_Arriba.CambiarFocusCasilla();
@@ -212,21 +284,21 @@ public class Casilla : MonoBehaviour{
     private void OnMouseDown() {
         if(GameManager.gameManager.pausa == true || GameManager.gameManager.canvas == true) return;
 
-        if(Casillas.casillas.getNumero() == 0){GameManager.gameManager.EjecutarAccionSobreCasilla(this);}  
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 0){GameManager.gameManager.EjecutarAccionSobreCasilla(this);}  
 
-        if(Casillas.casillas.getNumero() == 1){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 1){
             GameManager.gameManager.EjecutarAccionSobreCasilla(this);
             if(_Casilla_Arriba != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Arriba);
             if(_Casilla_Abajo != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Abajo);
         } 
 
-        if(Casillas.casillas.getNumero() == 2){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 2){
             GameManager.gameManager.EjecutarAccionSobreCasilla(this);
             if(_Casilla_Derecha != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Derecha);
             if(_Casilla_Izquierda != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Izquierda);
         }
 
-        if(Casillas.casillas.getNumero() == 3){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 3){
             GameManager.gameManager.EjecutarAccionSobreCasilla(this);
             if(_Casilla_Derecha != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Derecha);
             if(_Casilla_Izquierda != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Izquierda);
@@ -234,7 +306,7 @@ public class Casilla : MonoBehaviour{
             if(_Casilla_Abajo != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Abajo);
         }
 
-        if(Casillas.casillas.getNumero() == 4){
+        if(CasillasHerramienta.casillasHerramienta.getNumero() == 4){
             GameManager.gameManager.EjecutarAccionSobreCasilla(this);
             if(_Casilla_Derecha != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Derecha);
             if(_Casilla_Izquierda != null) GameManager.gameManager.EjecutarAccionSobreCasilla(_Casilla_Izquierda);

@@ -11,9 +11,19 @@ public class Patata : Cultivos{
     
     public void Inicializar(){
         
-        Nombre = "Patata";
-        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[2];
+        NombreClave = "Patata";
 
+        if(EstadoJuego.EdJ.Lang == "CAT"){
+            Nombre = "Patata";
+        }else if(EstadoJuego.EdJ.Lang == "ESP"){
+            Nombre = "Patata";
+        }else if(EstadoJuego.EdJ.Lang == "ENG"){
+            Nombre = "Potato";
+        }
+
+        Imagen = ImagenesManager.iMan.GetImagenesCosecha()[2];
+        NumeroCultivo = 2;
+        
         PuntosCrecimiento = 0;
         PuntosParaCosecha = 4;
     
@@ -24,8 +34,8 @@ public class Patata : Cultivos{
         CosechaReiterativa = true;
         TiempoCosechaReiterativa = 3;
 
-        CantidadSemillas = 0;
-        CantidadVegetal = 0;
+        CantidadSemillas = EstadoJuego.EdJ._Vegetales[1, 0];
+        CantidadVegetal = EstadoJuego.EdJ._Vegetales[1, 1];
         PrecioSemillas = 1.0f;
         PrecioVenta = 1.5f;
 
