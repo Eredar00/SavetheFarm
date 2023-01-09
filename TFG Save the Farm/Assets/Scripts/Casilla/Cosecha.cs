@@ -7,7 +7,7 @@ public class Cosecha : MonoBehaviour{
 
     private Sprite[] _ImagenesCosecha;
 
-    private void Start() {
+    private void Awake() {
         _ImagenesCosecha = ImagenesManager.iMan.GetImagenesCosecha();
         SetImagenSprite(0);
     }
@@ -24,6 +24,8 @@ public class Cosecha : MonoBehaviour{
     }
 
     public void RecolectarCosecha(TipoVegetal tipo, int cantidad){
+        EstadoJuego.EdJ._Stats[0] = EstadoJuego.EdJ._Stats[0] + cantidad; 
+        GameManager.gameManager.SetMessage(GameManager.gameManager.TextosBarraSuperior.GetTexto(1) + cantidad + GameManager.gameManager.TextosBarraSuperior.GetTexto(2));
         SetImagenSprite(0);
         if(tipo == TipoVegetal.Tomate){Hortalizas.hortalizas.GetCultivoPorPosicion(0).SumarVegetales(cantidad);}
         else if(tipo == TipoVegetal.Patata){Hortalizas.hortalizas.GetCultivoPorPosicion(1).SumarVegetales(cantidad);}

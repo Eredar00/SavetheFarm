@@ -105,6 +105,10 @@ public class Casilla : MonoBehaviour{
         }
     }
 
+    public void SetTipoPlantaNumerico(int numero){ 
+        _Planta.SetTipoVegetalNumerico(numero);
+    }
+
     public void SetTipoCasilla(TipoCasilla Nuevo_TipoCasilla){
         TipoCasilla = Nuevo_TipoCasilla;
         EstadoJuego.EdJ._Casillero[_PosX * 9 + _PosY, 0] =  GetTipoCasillaNumerico();

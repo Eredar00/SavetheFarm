@@ -51,12 +51,12 @@ public class TextosPortada : MonoBehaviour{
     }
 
     private void CargarDatos(){
-        _ObjetosJuego[0] = transform.Find("Nuevo Juego").gameObject;
-        _ObjetosJuego[1] = transform.Find("Instrucciones").gameObject;
-        _ObjetosJuego[2] = transform.Find("Salir").gameObject;
+        _ObjetosJuego[0] = transform.Find("Menus").Find("Nuevo Juego").gameObject;
+        _ObjetosJuego[1] = transform.Find("Menus").Find("Instrucciones").gameObject;
+        _ObjetosJuego[2] = transform.Find("Menus").Find("Salir").gameObject;
         _ObjetosJuego[3] = transform.Find("Version").gameObject;
-        _ObjetosJuego[4] = transform.Find("Continuar").gameObject;
-        _ObjetosJuego[5] = transform.Find("Idioma").gameObject;
+        _ObjetosJuego[4] = transform.Find("Menus").Find("Continuar").gameObject;
+        _ObjetosJuego[5] = transform.Find("Menus").Find("Idioma").gameObject;
     }
 
     private void SetTextos(){

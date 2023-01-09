@@ -20,14 +20,13 @@ public class Planta : MonoBehaviour{
     private Cosecha _Cosecha;
     public TipoVegetal _TipoVegetal;
     private SpriteRenderer _SpriteRenderer;
-    private int _PuntosCrecimiento = 0;
-    private int _PuntosCosechaReiterativa;
-
-    private int _PuntosParaCosecha;
-    private int _ProbabilidadSeguirRegada;
-    private int _CantidadCosecha;
-    private bool _CosechaReiterativa;
-    private int _TiempoCosechaReiterativa;
+    [SerializeField] private int _PuntosCrecimiento = 0;
+    [SerializeField] private int _PuntosCosechaReiterativa;
+    [SerializeField] private int _PuntosParaCosecha;
+    [SerializeField] private int _ProbabilidadSeguirRegada;
+    [SerializeField] private int _CantidadCosecha;
+    [SerializeField] private bool _CosechaReiterativa;
+    [SerializeField] private int _TiempoCosechaReiterativa;
 
     private void Awake() {
         _SpriteRenderer = transform.GetComponent<SpriteRenderer>();
@@ -42,13 +41,14 @@ public class Planta : MonoBehaviour{
 
     private void Inicializar(){
         Cultivos cultivo;
-        if(_TipoVegetal == TipoVegetal.Tomate){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(0);}
+        if(_TipoVegetal == TipoVegetal.Tomate){cultivo = GameManager.gameManager.GetHortalizas().GetCultivoPorPosicion(0);}
         else if(_TipoVegetal == TipoVegetal.Patata){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(1);}
         else if(_TipoVegetal == TipoVegetal.Zanahoria){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(2);}
         else if(_TipoVegetal == TipoVegetal.Naranja){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(3);}
         else if(_TipoVegetal == TipoVegetal.Arroz){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(4);}
         else if(_TipoVegetal == TipoVegetal.Trigo){cultivo = Hortalizas.hortalizas.GetCultivoPorPosicion(5);}
         else{cultivo = null;}
+
         _PuntosParaCosecha = cultivo.PuntosParaCosecha;
         _ProbabilidadSeguirRegada = cultivo.ProbabilidadSeguirRegada;
         _CantidadCosecha = Random.Range(cultivo.CantidadCosechaMin, cultivo.CantidadCosechaMax);
@@ -61,10 +61,10 @@ public class Planta : MonoBehaviour{
     }
 
     private void CalcularEstadoPlanta(){
-        if(_PuntosCrecimiento == 0){
+        if(PuntosCrecimiento == 0){
             _SpriteRenderer.sprite = _ImagenesPlanta[0];
         }else{
-            int nivelCrecimiento = (int)((float)_PuntosCrecimiento / (float)PuntosParaCosecha * 10);
+            int nivelCrecimiento = (int)((float)PuntosCrecimiento / (float)PuntosParaCosecha * 10);
             if(nivelCrecimiento <= 2){
                 _SpriteRenderer.sprite = _ImagenesPlanta[1];
             }else  if(nivelCrecimiento > 02 && nivelCrecimiento <= 04 ){
@@ -76,7 +76,7 @@ public class Planta : MonoBehaviour{
             }else  if(nivelCrecimiento > 08){
                 _SpriteRenderer.sprite = _ImagenesPlanta[5];
             }
-            if(_PuntosCrecimiento == PuntosParaCosecha){
+            if(PuntosCrecimiento == PuntosParaCosecha){
                 _Cosecha.PonerCosecha(_TipoVegetal);
                 GetComponentInParent<Casilla>().SetTipoCasilla(TipoCasilla.Cosecha_Seca);
             }
@@ -93,21 +93,30 @@ public class Planta : MonoBehaviour{
     }
 
     public void CrecerPlanta(){
-        if(_PuntosCrecimiento == _PuntosParaCosecha){
+        if(PuntosCrecimiento == _PuntosParaCosecha){
             _PuntosCosechaReiterativa++;
             if(_PuntosCosechaReiterativa == _TiempoCosechaReiterativa){
                 _Cosecha.PonerCosecha(_TipoVegetal);
                 GetComponentInParent<Casilla>().SetTipoCasilla(TipoCasilla.Cosecha_Seca);
             }
         }else{
-            _PuntosCrecimiento++;
-            EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 2] = _PuntosCrecimiento;
+            PuntosCrecimiento++;
+            GuardarDatosPlanta();
             CalcularEstadoPlanta();
         }
     }
 
     public void EliminarPlanta(){
-        _PuntosCrecimiento = 0;
+        PuntosCrecimiento = 0;
+        PuntosCosechaReiterativa = 0;
+        PuntosParaCosecha = 0;
+        ProbabilidadSeguirRegada = 0;
+        CantidadCosecha = 0;
+        TiempoCosechaReiterativa = 0;
+        CosechaReiterativa = false;
+        _TipoVegetal = TipoVegetal.Ninguno;
+
+        GuardarDatosPlanta();
         CalcularEstadoPlanta();
     }
 
@@ -120,7 +129,17 @@ public class Planta : MonoBehaviour{
         else if(vegetal.NombreClave == "Arroz"){_TipoVegetal = TipoVegetal.Arroz; Inicializar();}
         else if(vegetal.NombreClave == "Trigo"){_TipoVegetal = TipoVegetal.Trigo; Inicializar();}
 
+        GuardarDatosPlanta();
+    }
+
+    private void GuardarDatosPlanta(){
         EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 1] = GetTipoVegetalNumerico();
+        EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 2] = PuntosCrecimiento;
+        EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 3] = PuntosCosechaReiterativa;
+        EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 4] = PuntosParaCosecha;
+        EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 5] = ProbabilidadSeguirRegada;
+        EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 6] = CantidadCosecha;
+        EstadoJuego.EdJ._Casillero[_Casilla._PosX * 9 + _Casilla._PosY, 7] = TiempoCosechaReiterativa;
     }
 
     public TipoVegetal GetTipoVegetal(){return _TipoVegetal;}
@@ -136,18 +155,27 @@ public class Planta : MonoBehaviour{
     }
 
     public void SetCrecimientoNumerico(int numero){
-        _PuntosCrecimiento = numero;
+        PuntosCrecimiento = numero;
         CalcularEstadoPlanta();
     }
 
-    public void SetTipoVegetalNumerico(int numero){
+    public void SetTipoVegetalNumerico(int valor){
+        int numero = EstadoJuego.EdJ._Casillero[valor, 1];
         if(numero == 0) {_TipoVegetal = TipoVegetal.Ninguno;}
-        else if(numero == 1) {_TipoVegetal = TipoVegetal.Tomate; Inicializar();}
-        else if(numero == 2) {_TipoVegetal = TipoVegetal.Patata; Inicializar();}
-        else if(numero == 3) {_TipoVegetal = TipoVegetal.Zanahoria; Inicializar();}
-        else if(numero == 4) {_TipoVegetal = TipoVegetal.Naranja; Inicializar();}
-        else if(numero == 5) {_TipoVegetal = TipoVegetal.Arroz; Inicializar();}
-        else if(numero == 6) {_TipoVegetal = TipoVegetal.Trigo; Inicializar();}
+        else if(numero == 1) {_TipoVegetal = TipoVegetal.Tomate; }
+        else if(numero == 2) {_TipoVegetal = TipoVegetal.Patata; }
+        else if(numero == 3) {_TipoVegetal = TipoVegetal.Zanahoria; }
+        else if(numero == 4) {_TipoVegetal = TipoVegetal.Naranja; }
+        else if(numero == 5) {_TipoVegetal = TipoVegetal.Arroz; }
+        else if(numero == 6) {_TipoVegetal = TipoVegetal.Trigo; }
+
+        PuntosCrecimiento = EstadoJuego.EdJ._Casillero[valor, 2];
+        PuntosCosechaReiterativa = EstadoJuego.EdJ._Casillero[valor, 3];
+        PuntosParaCosecha = EstadoJuego.EdJ._Casillero[valor, 4];
+        ProbabilidadSeguirRegada = EstadoJuego.EdJ._Casillero[valor, 5];
+        CantidadCosecha = EstadoJuego.EdJ._Casillero[valor, 6];
+        TiempoCosechaReiterativa = EstadoJuego.EdJ._Casillero[valor, 7];
+        if(TiempoCosechaReiterativa > 0){CosechaReiterativa = true;}else{CosechaReiterativa = false;}
     }
 
     public int CantidadCosecha { get => _CantidadCosecha; set => _CantidadCosecha = value; }
@@ -156,4 +184,5 @@ public class Planta : MonoBehaviour{
     public bool CosechaReiterativa { get => _CosechaReiterativa; set => _CosechaReiterativa = value; }
     public int TiempoCosechaReiterativa { get => _TiempoCosechaReiterativa; set => _TiempoCosechaReiterativa = value; }
     public int PuntosCosechaReiterativa { get => _PuntosCosechaReiterativa; set => _PuntosCosechaReiterativa = value; }
+    public int PuntosCrecimiento { get => _PuntosCrecimiento; set => _PuntosCrecimiento = value; }
 }

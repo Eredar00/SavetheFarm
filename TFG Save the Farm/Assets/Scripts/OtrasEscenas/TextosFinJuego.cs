@@ -5,34 +5,29 @@ using UnityEngine.UI;
 
 public class TextosFinJuego : MonoBehaviour{
     
-    private string[] _CAT_Text = {
-        "Felicitats!", 
-        "Has aconseguit sobreviure econòmicament aquests 28 dies. Enhorabona! Properament una nova versió, amb més material, estarà disponible.", 
+    private string[] _CAT_Boton = {
         "Portada",
         "Crèdits",
         "Sortir"
     };
 
-    private string[] _ESP_Text = {
-        "¡Felicidades!", 
-        "Has conseguido sobrevivir económicamente estos 28 dias. ¡Enhorabuena! Próximamente una nueva versión, con más material, estará disponible.", 
+    private string[] _ESP_Boton = {
         "Portada",
         "Créditos",
         "Salir"
     };
 
-    private string[] _ENG_Text = {
-        "Congratulations", 
-        "You have managed to survive financially these 28 days. !! Congratulations!! Soon a new version, with more material, will be available.", 
+    private string[] _ENG_Boton = {
         "Home page",
         "Credits",
         "Exit"
     };
+
     
-    private GameObject[] _ObjetosJuego = new GameObject[5];
+    private GameObject[] _BotonesJuego = new GameObject[4];
     private string _Idioma;
-    private string[] _Textos;
-    
+    private string[] _Botones;
+
     private void Start() {
         GetTextosIdioma();
         CargarDatos();
@@ -41,22 +36,24 @@ public class TextosFinJuego : MonoBehaviour{
 
     private void GetTextosIdioma(){
         _Idioma = EstadoJuego.EdJ.Lang;
-        if(_Idioma == "CAT"){_Textos = _CAT_Text;}
-        else if(_Idioma == "ESP"){_Textos = _ESP_Text;}
-        else if(_Idioma == "ENG"){_Textos = _ENG_Text;}
+        if(_Idioma == "CAT"){ _Botones = _CAT_Boton;}
+        else if(_Idioma == "ESP"){_Botones = _ESP_Boton;}
+        else if(_Idioma == "ENG"){_Botones = _ENG_Boton;}
     }
 
     private void CargarDatos(){
-        _ObjetosJuego[0] = transform.Find("Ganador").Find("Titulo").gameObject;
-        _ObjetosJuego[1] = transform.Find("Ganador").Find("Texto").gameObject;
-        _ObjetosJuego[2] = transform.Find("Portada").gameObject;
-        _ObjetosJuego[3] = transform.Find("Creditos").gameObject;
-        _ObjetosJuego[4] = transform.Find("Salir").gameObject;
+        _BotonesJuego[0] = transform.Find("Portada").gameObject;
+        _BotonesJuego[1] = transform.Find("Creditos").gameObject;
+        _BotonesJuego[2] = transform.Find("Salir").gameObject;
     }
 
     private void SetTextos(){
-        for (int i = 0; i < _ObjetosJuego.Length; i++){
-             _ObjetosJuego[i].GetComponentInChildren<Text>().text = _Textos[i];
+        for (int i = 0; i < _BotonesJuego.Length; i++){
+             _BotonesJuego[i].GetComponentInChildren<Text>().text = _Botones[i];
         }
+    }
+
+    public string GetTexto(int numero){
+        return _Botones[numero];
     }
 }

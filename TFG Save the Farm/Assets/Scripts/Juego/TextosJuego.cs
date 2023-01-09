@@ -6,39 +6,57 @@ using UnityEngine.UI;
 public class TextosJuego : MonoBehaviour{
     
     private string[] _CAT_Text = {
-        "Següent dia", 
+        "SEGÜENT DIA", 
         "Dia",
-        "CALENDARI",
+        "Mes",
+        "Any",
         "BOTIGA D'EINES",
         "VERDURES",
         "VENDRE",
         "COMPRAR LLAVORS",
-        "Carascterístiques"
+        "Característiques",
+        "CALENDARI",
+        "BOTIGA D'EINES",
+        "BOTIGA DE VERDURES",
+        "Sense missatges...",
+        "DINERS"
     };
 
     private string[] _ESP_Text = {
-        "Siguiente día", 
+        "SIGUIENTE DÍA", 
         "Día",
-        "CALENDARIO",
+        "Mes",
+        "Año",
         "TIENDA DE HERRAMIENTAS",
         "HORTALIZAS",
         "VENDER",
         "COMPRAR SEMILLAS",
-        "Cararcterísticas"
+        "Características",
+        "CALENDARIO",
+        "TIENDA DE HERRAMIENTAS",
+        "TIENDA DE HORTALIZAS",
+        "Sin mensajes...",
+        "DINERO"
     };
 
     private string[] _ENG_Text = {
-        "Next day", 
+        "NEXT DAY", 
         "Day",
-        "CALENDAR",
-        "TOOLS STORE",
+        "Month",
+        "Year",
+        "TOOL STORE",
         "VEGETABLES",
         "SELL",
         "BUY SEEDS",
-        "Features"
+        "Features",
+        "CALENDAR",
+        "TOOL STORE",
+        "VEGETABLE STORE",
+        "No messages yet...",
+        "MONEY"
     };
     
-    GameObject[] _ObjetosJuego = new GameObject[8];
+    GameObject[] _ObjetosJuego = new GameObject[14];
     private string _Idioma;
     private string[] _Textos;
     
@@ -56,14 +74,20 @@ public class TextosJuego : MonoBehaviour{
     }
 
     private void CargarDatos(){
-        _ObjetosJuego[0] = transform.Find("Siguiente Dia").gameObject;
-        _ObjetosJuego[1] = transform.Find("Dia").gameObject;
-        _ObjetosJuego[2] = transform.Find("Calendario").Find("Mes").Find("Titulo").gameObject;
-        _ObjetosJuego[3] = transform.Find("Tiendas").Find("Tienda Herramientas").Find("Titulo").gameObject;
-        _ObjetosJuego[4] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Titulo").gameObject;
-        _ObjetosJuego[5] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Menu 02").Find("Hortaliza").Find("Vender").gameObject;
-        _ObjetosJuego[6] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Menu 02").Find("Semilla").Find("Comprar").gameObject;
-        _ObjetosJuego[7] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Menu 02").Find("Caracteristicas").Find("Titulo Caracteristicas").gameObject;
+        _ObjetosJuego[0] = transform.Find("BotonesInfDer").Find("Siguiente Dia").gameObject;
+        _ObjetosJuego[1] = transform.Find("BotonesSupDer").Find("Fecha").Find("Day").gameObject;
+        _ObjetosJuego[2] = transform.Find("BotonesSupDer").Find("Fecha").Find("Month").gameObject;
+        _ObjetosJuego[3] = transform.Find("BotonesSupDer").Find("Fecha").Find("Year").gameObject;
+        _ObjetosJuego[4] = transform.Find("Tiendas").Find("Tienda Herramientas").Find("Titulo").gameObject;
+        _ObjetosJuego[5] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Titulo").gameObject;
+        _ObjetosJuego[6] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Menu 02").Find("Hortaliza").Find("Vender").gameObject;
+        _ObjetosJuego[7] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Menu 02").Find("Semilla").Find("Comprar").gameObject;
+        _ObjetosJuego[8] = transform.Find("Tiendas").Find("Tienda Hortalizas").Find("Menu 02").Find("Caracteristicas").Find("Titulo Caracteristicas").gameObject;
+        _ObjetosJuego[9] = transform.Find("BotonesSupDer").Find("Calendario").gameObject;
+        _ObjetosJuego[10] = transform.Find("BotonesInfDer").Find("TiendaHerramientas").gameObject;
+        _ObjetosJuego[11] = transform.Find("BotonesInfDer").Find("TiendaVerduras").gameObject;
+        _ObjetosJuego[12] = transform.Find("BotonesSupCen").Find("Texto").gameObject;
+        _ObjetosJuego[13] = transform.Find("MenuDinero").Find("Titulo").Find("Texto").gameObject;
     }
 
     private void CargarTextos(){

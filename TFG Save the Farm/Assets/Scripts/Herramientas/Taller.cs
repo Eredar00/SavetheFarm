@@ -80,12 +80,24 @@ public class Taller : MonoBehaviour{
         
         }else if(numAccion == 5){
 
-            if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Seca) {casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Seca); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Mojado) {casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Seca) {casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Seca); plantaCasilla.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-            else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Mojado) {casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Mojada); plantaCasilla.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); }
-        
+            Papelera(casillaRecibida, plantaCasilla, costeEnergia);
+            
         }else if(numAccion == 6){}
+    }
+
+    private void Papelera(Casilla casillaRecibida, Planta plantaCasilla, int costeEnergia){
+        if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Seca); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[3]++; }
+        else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Mojado) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Mojado); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[3]++; }
+        else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Seca) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Seca); plantaCasilla.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[3]++; }
+        else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Mojado) {
+            casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Mojada); plantaCasilla.EliminarPlanta(); GameManager.gameManager.VariarPuntosEnergia(-costeEnergia);
+            EstadoJuego.EdJ._Stats[3]++; }
     }
 
     private void Sembrar(Casilla casillaRecibida, int costeEnergia){
@@ -93,7 +105,7 @@ public class Taller : MonoBehaviour{
             Cultivos vegetalPlantar = Semillas.semillas.GetVegetalPlantar();
 
             if(vegetalPlantar.CantidadSemillas == 0){
-                Debug.Log("No hay suficientes semillas.");
+                GameManager.gameManager.SetMessage(GameManager.gameManager.TextosBarraSuperior.GetTexto(0));
             }else{
                 GameManager.gameManager.VariarPuntosEnergia(-costeEnergia);
                 casillaRecibida.GetPlanta().SetTipoVegetal(vegetalPlantar);
@@ -107,6 +119,7 @@ public class Taller : MonoBehaviour{
                 }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Mojado){
                     casillaRecibida.SetTipoCasilla(TipoCasilla.Plantado_Mojado);
                 }
+                EstadoJuego.EdJ._Stats[1]++; 
             }
         }
     }
@@ -114,19 +127,24 @@ public class Taller : MonoBehaviour{
     private void Regar(Casilla casillaRecibida, int costeEnergia){
         if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Tierra_Seca) {
             casillaRecibida.SetTipoCasilla(TipoCasilla.Tierra_Mojada); 
-            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            GameManager.gameManager.VariarPuntosEnergia(-costeEnergia);
+            EstadoJuego.EdJ._Stats[2]++; 
         }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Arado_Seca) {
             casillaRecibida.SetTipoCasilla(TipoCasilla.Arado_Mojado); 
             GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[2]++; 
         }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Plantado_Seca) {
             casillaRecibida.SetTipoCasilla(TipoCasilla.Plantado_Mojado); 
             GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[2]++; 
         }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cultivado_Seca) {
             casillaRecibida.SetTipoCasilla(TipoCasilla.Cultivado_Mojado); 
             GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[2]++; 
         }else if(casillaRecibida.GetTipoCasilla() == TipoCasilla.Cosecha_Seca) {
             casillaRecibida.SetTipoCasilla(TipoCasilla.Cosecha_Mojado); 
             GameManager.gameManager.VariarPuntosEnergia(-costeEnergia); 
+            EstadoJuego.EdJ._Stats[2]++; 
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PuntosEnergia : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
+public class PuntosEnergia : MonoBehaviour{
     
     [SerializeField] private Image barraPE;
     [SerializeField] private Text textoPE;
@@ -28,15 +28,6 @@ public class PuntosEnergia : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
         textoPE.text = (actualPE + " / " + maxPE);
     }
-
-    public void OnPointerEnter(PointerEventData eventData){
-        textoPE.gameObject.SetActive(true);
-    }
-    public void OnPointerExit(PointerEventData eventData){
-        textoPE.gameObject.SetActive(false);
-    }
-
-
 
     public bool RevisarPE(int variacion){
         if(actualPE + variacion < 0){

@@ -8,7 +8,8 @@ public class TextosInstrucciones : MonoBehaviour{
     private string[] _CAT_Text = {
         "INSTRUCCIONS DEL JOC",
         "INTRODUCCIÓ I OBJECTIUS",
-        "1. El principal objectiu del joc és poder completar la major quantitat de dies sense arruïnar-te.\n \n2. Per això, disposes d'un total de 6 eines i 6 tipus de cultius diferents, cadascun amb les seves particularitats.\n \n3 En finalitzar els dies 14 i 28 hauràs de tenir prou diners per poder pagar el deute (100$ i 200$ respectivament) Si ho aconsegueixes, guanyaràs el joc En cas contrari, t'aniràs a la fallida i perdràs . A les pàgines següents podràs veure com funciona el joc.", 
+        "1. El principal objectiu del joc és poder completar la major quantitat de dies sense arruïnar-te.\n \n2. Per això, disposes d'un total de 6 eines i 6 tipus de cultius diferents, cadascun amb les seves particularitats.\n \n3. Cada 7 dies hauràs de pagar les factures contretes, que aniran augmentant progressivament. Podràs veure la quantitat a pagar al Calendari. La partida acabarà en el moment que entris en fallida. \n \n4 A les pàgines següents podràs veure com funciona el joc.", 
+        
         "CASELLES",
         "1. En iniciar el joc, veuràs que hi ha 15 grans blocs de caselles. Cada bloc té un preu, que pots veure en posar el cursor a sobre.",
         "2. El bloc central del tauler, té un cost de 0$. Si hi prems, es desbloquejarà, de forma gratuïta, i tindràs 9 caselles de terra seca.",
@@ -34,9 +35,9 @@ public class TextosInstrucciones : MonoBehaviour{
 
          "BOTIGA D'EINES",
          "1. La botiga d'eines s'obre en prémer la tecla ' T '. \n \n 2. En aquesta botiga, podeu comprar millores per a les eines.",
-         "3. La millora de Punts d'Energia (PE) farà que cada vegada que utilitzeu les eines consumiu menys PE.",
-         "4. La millora de Casillas farà que puguis fer servir l'eina en més caselles alhora.",
-         "5. Per comprar les millores, només has de prémer la imatge del carret de la compra. Si tens $$ suficients, compraràs la millora.",
+         "2. La millora de Punts d'Energia (PE) farà que cada vegada que utilitzeu les eines consumiu menys PE.",
+         "3. La millora de Casillas farà que puguis fer servir l'eina en més caselles alhora.",
+         "4. Per comprar les millores, només has de prémer la imatge del carret de la compra. Si tens $$ suficients, compraràs la millora.",
 
          "SELECCIÓ DE CASELLES",
          "1. Quan compreu una millora de Caselles d'una eina, podreu utilitzar la tecla ' R ' per canviar les caselles seleccionades. També podeu fer clic a la imatge inferior esquerra del joc:",
@@ -64,8 +65,8 @@ public class TextosInstrucciones : MonoBehaviour{
          "CALENDARI",
          "1. Amb la tecla 'C' podràs obrir el calendari del joc. També pots fer clic a la imatge superior dreta del joc, on apareix el dia.",
          "2. El calendari et permetrà veure quin dia és, així com quants dies queden fins al proper dia que toca pagar el deute.",
-         "3. En finalitzar els dies marcats en groc, l'usuari ha de poder pagar el deute (100$ el dia 14 i 200$ el dia 28). En cas contrari, es declara en fallida i perd la partida.",
-         "4. Si en acabar el dia 28 l'usuari segueix tenint diners, guanya la partida.",
+         "3. Cada 7 dies hauràs de pagar la quantitat assenyalada. Aquesta anirà augmentant amb el pas del temps.",
+         "4. La partida acabarà el dia que no puguis pagar el deute",
 
         "PORTADA",
         "SORTIR"
@@ -75,7 +76,7 @@ public class TextosInstrucciones : MonoBehaviour{
         "INSTRUCCIONES DEL JUEGO",
 
         "INTRODUCCIÓN Y OBJETIVOS", 
-        "1. El principal objetivo del juego es poder completar la mayor cantidad de días sin arruinarte.\n \n2. Para ello, dispones de un total de 6 herramientas y 6 tipos de cultivos distintos, cada uno con sus particularidades.\n \n3. Al finalizar los días 14 y 28 deberás tener suficiente dinero para poder pagar la deuda (100$ y 200$ respectivamente). Si lo consigues, ganarás el juego. En caso contrario, te irás a la bancarrota y perderás.\n \n4. En las siguientes páginas podrás ver cómo funciona el juego.", 
+        "1. El principal objetivo del juego es poder completar la mayor cantidad de días sin arruinarte.\n \n2. Para ello, dispones de un total de 6 herramientas y 6 tipos de cultivos distintos, cada uno con sus particularidades.\n \n3. Cada 7 días tendrás que pagar las facturas contraidas, que irán aumentando de forma progresiva. Podrás ver la cantidad a pagar en el Calendario. La partida terminará en el momento que entres en bancarrota. \n \n4. En las siguientes páginas podrás ver cómo funciona el juego.", 
         
         "CASILLAS",
         "1. Al iniciar el juego, verás que hay 15 grandes bloques de casillas. Cada bloque tiene un precio, que puedes ver al poner el cursor encima.",
@@ -102,9 +103,9 @@ public class TextosInstrucciones : MonoBehaviour{
 
         "TIENDA DE HERRAMIENTAS",
         "1. La tienda de herramientas se abre al pulsar la tecla ' T '. \n \n 2. En esta tienda, puedes comprar mejoras para las herramientas.",
-        "3. La mejora de Puntos de Energía (PE) hará que cada vez que uses la herramientas consumas menos PE.",
-        "4. La mejora de Casillas hará que puedas usar la herramienta en más casillas a la vez.",
-        "5. Para comprar las mejoras, solo debes pulsar en la imagen del carrito de la compra. Si tienes $$ suficientes, comprarás la mejora.",
+        "2. La mejora de Puntos de Energía (PE) hará que cada vez que uses la herramientas consumas menos PE.",
+        "3. La mejora de Casillas hará que puedas usar la herramienta en más casillas a la vez.",
+        "4. Para comprar las mejoras, solo debes pulsar en la imagen del carrito de la compra. Si tienes $$ suficientes, comprarás la mejora.",
 
         "SELECCIÓN DE CASILLAS",
         "1. Al comprar una mejora de Casillas de una herramienta, podrás usar la tecla ' R ' para cambiar las casillas seleccionadas. También puedes hacer clic en la imagen inferior izquierda del juego:",
@@ -132,8 +133,8 @@ public class TextosInstrucciones : MonoBehaviour{
         "CALENDARIO",
         "1. Con la tecla ' C ' podrás abrir el calendario del juego. También puedes hacer clic en la imagen superior derecha del juego, dónde aparece el día. ",
         "2. El calendario te permitirá ver qué día es, así como cuántos días quedan hasta el próximo día que toca pagar la deuda.",
-        "3. Al finalizar los días marcados en amarillo, el usuario debe poder pagar la deuda (100$ el día 14 y 200$ el día 28). En caso contrario, se declara en bancarrota y pierde la partida.",
-        "4. Si al terminar el día 28  el usuario sigue teniendo dinero, gana la partida.",
+        "3. Cada 7 días deberás pagar la cantidad señalada. Esta irá aumentando con el paso del tiempo.",
+        "4. La partida terminará el día que no puedas pagar la deuda",
 
         "PORTADA",
         "SALIR"
@@ -142,7 +143,8 @@ public class TextosInstrucciones : MonoBehaviour{
     private string[] _ENG_Text = {
         "GAME INSTRUCTIONS",
         "INTRODUCTION AND OBJECTIVES",
-        "1. The main objective of the game is to be able to complete as many days as possible without going bankrupt.\n \n2. To do this, you have a total of 6 tools and 6 different types of crops, each with its own features.\n \n3 At the end of days 14 and 28 you should have enough money to be able to pay off the debt ($100 and $200 respectively). If you do, you will win the game, otherwise you will go bankrupt and lose.\n \n4 On the following pages you will see how the game works.",
+        "1. The main objective of the game is to be able to complete as many days as possible without going bankrupt.\n \n2. To do this, you have a total of 6 tools and 6 different types of crops, each with its own features.\n \n3. Every 7 days you will have to pay the contracted invoices, which will increase progressively. You will be able to see the amount to pay in the Calendar. The game will end the moment you go bankrupt.\n \n4 On the following pages you will see how the game works.",
+        
         "TILES",
         "1. When you start the game, you will see that there are 15 large blocks of tiles. Each block has a price, which you can see by hovering over it.",
         "2. The central block of the board has a cost of $0. If you click on it, it will be unlocked, for free, and you will have 9 squares of dry land.",
@@ -168,9 +170,9 @@ public class TextosInstrucciones : MonoBehaviour{
 
          "TOOL SHOP",
          "1. The tool shop is opened by pressing the ' T ' key. \n \n 2. In this shop, you can buy upgrades for tools.",
-         "3. The Energy Points (EP) upgrade will decrease the EP you need to perform an action with that tool.",
-         "4. The tile upgrade will allow you to use the tool on more cells at once.",
-         "5. To buy the upgrades, just click on the shopping cart image. If you have enough $$, you will buy the upgrade.",
+         "2. The Energy Points (EP) upgrade will decrease the EP you need to perform an action with that tool.",
+         "3. The tile upgrade will allow you to use the tool on more cells at once.",
+         "4. To buy the upgrades, just click on the shopping cart image. If you have enough $$, you will buy the upgrade.",
 
          "SELECTION OF TILES",
          "1. When purchasing a Tile upgrade, you can use the 'R' key to change the selected Slots. You can also click on the bottom left image of the game:",
@@ -198,8 +200,8 @@ public class TextosInstrucciones : MonoBehaviour{
          "CALENDAR",
          "1. With the ' C ' key you can open the game calendar. You can also click on the top right image of the game, where the day appears. ",
          "2. The calendar will allow you to see what day it is, as well as how many days are left until the debt is due.",
-         "3. At the end of the days marked in yellow, the user must be able to pay the debt ($100 on the 14th and $200 on the 28th). Otherwise, they declare bankruptcy and lose the game.",
-         "4. If at the end of the 28th day the user still has money, they win the game.",
+         "3. Every 7 days you must pay the indicated amount. This will increase over time.",
+         "4. The game will end the day you can't pay the debt",
 
         "HOME PAGE",
         "EXIT"
@@ -242,21 +244,21 @@ public class TextosInstrucciones : MonoBehaviour{
         _ObjetosJuego[2] = pag01.Find("Texto").gameObject;
 
         _ObjetosJuego[3] = pag02.Find("Titulo").gameObject;
-        _ObjetosJuego[4] = pag02.Find("Texto01").gameObject;
-        _ObjetosJuego[5] = pag02.Find("Texto02").gameObject;
-        _ObjetosJuego[6] = pag02.Find("Texto03").gameObject;
-        _ObjetosJuego[7] = pag02.Find("Texto04").gameObject;
-        _ObjetosJuego[8] = pag02.Find("Texto05").gameObject;
-        _ObjetosJuego[9] = pag02.Find("Texto06").gameObject;
-        _ObjetosJuego[10] = pag02.Find("Texto07").gameObject;
+        _ObjetosJuego[4] = pag02.Find("Textos").Find("Texto01").gameObject;
+        _ObjetosJuego[5] = pag02.Find("Textos").Find("Texto02").gameObject;
+        _ObjetosJuego[6] = pag02.Find("Textos").Find("Texto03").gameObject;
+        _ObjetosJuego[7] = pag02.Find("Textos").Find("Texto04").gameObject;
+        _ObjetosJuego[8] = pag02.Find("Textos").Find("Texto05").gameObject;
+        _ObjetosJuego[9] = pag02.Find("Textos").Find("Texto06").gameObject;
+        _ObjetosJuego[10] = pag02.Find("Textos").Find("Texto07").gameObject;
 
         _ObjetosJuego[11] = pag03.Find("Titulo").gameObject;
-        _ObjetosJuego[12] = pag03.Find("Texto01").gameObject;
-        _ObjetosJuego[13] = pag03.Find("Texto02").gameObject;
-        _ObjetosJuego[14] = pag03.Find("Texto03").gameObject;
-        _ObjetosJuego[15] = pag03.Find("Texto04").gameObject;
-        _ObjetosJuego[16] = pag03.Find("Texto05").gameObject;
-        _ObjetosJuego[17] = pag03.Find("Texto06").gameObject;
+        _ObjetosJuego[12] = pag03.Find("Textos").Find("Texto01").gameObject;
+        _ObjetosJuego[13] = pag03.Find("Textos").Find("Texto02").gameObject;
+        _ObjetosJuego[14] = pag03.Find("Textos").Find("Texto03").gameObject;
+        _ObjetosJuego[15] = pag03.Find("Textos").Find("Texto04").gameObject;
+        _ObjetosJuego[16] = pag03.Find("Textos").Find("Texto05").gameObject;
+        _ObjetosJuego[17] = pag03.Find("Textos").Find("Texto06").gameObject;
 
         _ObjetosJuego[18] = pag04.Find("Titulo").gameObject;
         _ObjetosJuego[19] = pag04.Find("Texto01").gameObject;
@@ -265,10 +267,10 @@ public class TextosInstrucciones : MonoBehaviour{
         _ObjetosJuego[22] = pag04.Find("Texto04").gameObject;
 
         _ObjetosJuego[23] = pag05.Find("Titulo").gameObject;
-        _ObjetosJuego[24] = pag05.Find("Texto01").gameObject;
-        _ObjetosJuego[25] = pag05.Find("Texto02").gameObject;
-        _ObjetosJuego[26] = pag05.Find("Texto03").gameObject;
-        _ObjetosJuego[27] = pag05.Find("Texto04").gameObject;
+        _ObjetosJuego[24] = pag05.Find("Textos").Find("Texto01").gameObject;
+        _ObjetosJuego[25] = pag05.Find("Textos").Find("Texto02").gameObject;
+        _ObjetosJuego[26] = pag05.Find("Textos").Find("Texto03").gameObject;
+        _ObjetosJuego[27] = pag05.Find("Textos").Find("Texto04").gameObject;
 
         _ObjetosJuego[28] = pag06.Find("Titulo").gameObject;
         _ObjetosJuego[29] = pag06.Find("Texto01").gameObject;
@@ -279,24 +281,24 @@ public class TextosInstrucciones : MonoBehaviour{
         _ObjetosJuego[34] = pag06.Find("Texto06").gameObject;
 
         _ObjetosJuego[35] = pag07.Find("Titulo").gameObject;
-        _ObjetosJuego[36] = pag07.Find("Texto01").gameObject;
-        _ObjetosJuego[37] = pag07.Find("Texto02").gameObject;
-        _ObjetosJuego[38] = pag07.Find("Texto03").gameObject;
-        _ObjetosJuego[39] = pag07.Find("Texto04").gameObject;
-        _ObjetosJuego[40] = pag07.Find("Texto05").gameObject;
-        _ObjetosJuego[41] = pag07.Find("Texto06").gameObject;
+        _ObjetosJuego[36] = pag07.Find("Textos").Find("Texto01").gameObject;
+        _ObjetosJuego[37] = pag07.Find("Textos").Find("Texto02").gameObject;
+        _ObjetosJuego[38] = pag07.Find("Textos").Find("Texto03").gameObject;
+        _ObjetosJuego[39] = pag07.Find("Textos").Find("Texto04").gameObject;
+        _ObjetosJuego[40] = pag07.Find("Textos").Find("Texto05").gameObject;
+        _ObjetosJuego[41] = pag07.Find("Textos").Find("Texto06").gameObject;
 
         _ObjetosJuego[42] = pag08.Find("Titulo").gameObject;
-        _ObjetosJuego[43] = pag08.Find("Texto01").gameObject;
-        _ObjetosJuego[44] = pag08.Find("Texto02").gameObject;
-        _ObjetosJuego[45] = pag08.Find("Texto03").gameObject;
-        _ObjetosJuego[46] = pag08.Find("Texto04").gameObject;
+        _ObjetosJuego[43] = pag08.Find("Textos").Find("Texto01").gameObject;
+        _ObjetosJuego[44] = pag08.Find("Textos").Find("Texto02").gameObject;
+        _ObjetosJuego[45] = pag08.Find("Textos").Find("Texto03").gameObject;
+        _ObjetosJuego[46] = pag08.Find("Textos").Find("Texto04").gameObject;
 
         _ObjetosJuego[47] = pag09.Find("Titulo").gameObject;
-        _ObjetosJuego[48] = pag09.Find("Texto01").gameObject;
-        _ObjetosJuego[49] = pag09.Find("Texto02").gameObject;
-        _ObjetosJuego[50] = pag09.Find("Texto03").gameObject;
-        _ObjetosJuego[51] = pag09.Find("Texto04").gameObject;
+        _ObjetosJuego[48] = pag09.Find("Textos").Find("Texto01").gameObject;
+        _ObjetosJuego[49] = pag09.Find("Textos").Find("Texto02").gameObject;
+        _ObjetosJuego[50] = pag09.Find("Textos").Find("Texto03").gameObject;
+        _ObjetosJuego[51] = pag09.Find("Textos").Find("Texto04").gameObject;
     }
 
     private void SetTextos(){

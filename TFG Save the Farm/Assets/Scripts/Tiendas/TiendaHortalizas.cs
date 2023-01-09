@@ -108,7 +108,8 @@ public class TiendaHortalizas : MonoBehaviour{
 
             cultivo.ComprarSemillas(cantidad);
 
-            Menu02.transform.Find("Semilla").Find("Cantidad Semillas").GetComponent<Text>().text = "Tienes: " + cultivo.CantidadSemillas;
+            Menu02.transform.Find("Semilla").Find("Cantidad Semillas").GetComponent<Text>().text = _Textos[0] + cultivo.CantidadSemillas;
+
             cultivo.ActualizarTextoMenu01();
             Semillas.semillas.ActualizarTextoNumero();
         }
@@ -118,7 +119,7 @@ public class TiendaHortalizas : MonoBehaviour{
         if(cultivo.CantidadVegetal >= cantidad){
             Dinero.dinero.VariarDinero(cantidad * cultivo.PrecioVenta);
             cultivo.VenderVegetal(cantidad);
-            Menu02.transform.Find("Hortaliza").Find("Cantidad").GetComponent<Text>().text = "Tienes: " + cultivo.CantidadVegetal;
+            Menu02.transform.Find("Hortaliza").Find("Cantidad").GetComponent<Text>().text = _Textos[0] + cultivo.CantidadVegetal;
             cultivo.ActualizarTextoMenu01();
         }else{
             Dinero.dinero.VariarDinero(cultivo.CantidadVegetal * cultivo.PrecioVenta);

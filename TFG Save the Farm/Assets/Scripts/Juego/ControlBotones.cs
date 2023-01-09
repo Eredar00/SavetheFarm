@@ -53,7 +53,7 @@ public class ControlBotones : MonoBehaviour{
 
     public GameObject getTiendaHortalizas(){return tiendaHortalizas;}
 
-    private void verTiendaHortalizas(){
+    public void verTiendaHortalizas(){
         if(tiendaHortalizas.activeSelf){
             tiendaHortalizas.SetActive(false);
             GameManager.gameManager.CambiarFocusCanvas(false);
@@ -70,7 +70,7 @@ public class ControlBotones : MonoBehaviour{
         }
     }
 
-    private void VerTiendaHerramientas(){  
+    public void VerTiendaHerramientas(){  
         Taller taller = GameManager.gameManager.GetTaller();
         if(_TiendaHerramientas.activeSelf){
             _TiendaHerramientas.SetActive(false);

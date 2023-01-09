@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour{
 
@@ -21,26 +22,32 @@ public class GameManager : MonoBehaviour{
     [SerializeField] private Casilla _CasillaFocus;
     [SerializeField] private int _NumeroHerramienta;
     [SerializeField] private GameObject _InfoCasilla;
+    private Text _TextoBarra;
+    private TextosBarraSuperior _TextosBarraSuperior;
 
     public GameObject InfoCasilla { get => _InfoCasilla; set => _InfoCasilla = value; }
     public int NumeroHerramienta { get => _NumeroHerramienta; set => _NumeroHerramienta = value; }
     public Casilla CasillaFocus { get => _CasillaFocus; set => _CasillaFocus = value; }
-
-
+    public TextosBarraSuperior TextosBarraSuperior { get => _TextosBarraSuperior; set => _TextosBarraSuperior = value; }
 
     // Funcion Awake
     private void Awake() {
         gameManager = this;
         hortalizas = transform.GetComponent<Hortalizas>();
         _TallerHerramientas = transform.GetComponent<Taller>();
+        _TextoBarra = tiempo.transform.parent.Find("BotonesSupCen").GetComponentInChildren<Text>();
+        TextosBarraSuperior = GetComponent<TextosBarraSuperior>();
     }
 
     // Función Start
     private void Start() {
         ChangeState(GameState.GenerarMapa);
         InicializarVariables();
-        
     }    
+
+    public void SetMessage(string mensaje){
+        _TextoBarra.text = mensaje;
+    }
 
     private void InicializarVariables(){
         ListaCultivos = GameManager.gameManager.GetHortalizas().GetCultivos();

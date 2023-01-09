@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour{
 
         if(EstadoJuego.EdJ._Bloques == null){
             EstadoJuego.EdJ._Bloques = new bool[15] {false, false, false, false, false, false, false, false, false, false, false, false,false, false, false};
-            EstadoJuego.EdJ._Casillero = new int[_Ancho * _Largo, 3];
+            EstadoJuego.EdJ._Casillero = new int[_Ancho * _Largo, 8];
             PonerCasillas();
             GameManager.gameManager.ChangeState(GameManager.GameState.JuegoEnMarcha);
         }else{
@@ -69,6 +69,11 @@ public class GridManager : MonoBehaviour{
                 EstadoJuego.EdJ._Casillero[cont, 0] =  GetTileAtPosition(new Vector2(x,y)).GetTipoCasillaNumerico();
                 EstadoJuego.EdJ._Casillero[cont, 1] =  0;
                 EstadoJuego.EdJ._Casillero[cont, 2] =  0;
+                EstadoJuego.EdJ._Casillero[cont, 3] =  0;
+                EstadoJuego.EdJ._Casillero[cont, 4] =  0;
+                EstadoJuego.EdJ._Casillero[cont, 5] =  0;
+                EstadoJuego.EdJ._Casillero[cont, 6] =  0;
+                EstadoJuego.EdJ._Casillero[cont, 7] =  0;
                 cont++;
             }
         }
@@ -119,7 +124,7 @@ public class GridManager : MonoBehaviour{
             for (int y = 0; y < _Largo; y++){
                 if(GetTileAtPosition(new Vector2(x,y)).GetTipoCasilla() != TipoCasilla.Bloqueado){
                     GetTileAtPosition(new Vector2(x,y)).SetTipoCasillaNumerico(EstadoJuego.EdJ._Casillero[cont, 0]);
-                    //GetTileAtPosition(new Vector2(x,y)).GetPlanta().SetTipoVegetalNumerico(EstadoJuego.EdJ._Casillero[cont, 1]);
+                    GetTileAtPosition(new Vector2(x,y)).SetTipoPlantaNumerico(cont);
                     //GetTileAtPosition(new Vector2(x,y)).GetPlanta().SetCrecimientoNumerico(EstadoJuego.EdJ._Casillero[cont, 2]);
                 }
                 cont++;

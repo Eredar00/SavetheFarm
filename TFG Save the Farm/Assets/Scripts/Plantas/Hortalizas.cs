@@ -11,7 +11,7 @@ public class Hortalizas : MonoBehaviour{
     private void Awake() {
         hortalizas = this;
     }
-
+    
     public Cultivos GetCultivoPorPosicion(int posicion){return _Cultivos[posicion];}
 
     public Cultivos[] GetCultivos(){return _Cultivos;}

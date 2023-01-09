@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Arroz : Cultivos{
 
-    private void Start() {
+    private void Awake() {
          Inicializar();
     }
 
