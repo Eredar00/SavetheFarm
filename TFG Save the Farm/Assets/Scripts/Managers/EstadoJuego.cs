@@ -44,7 +44,7 @@ public class EstadoJuego : MonoBehaviour{
 
     public void Nuevo_Juego(){
         _FinalJuego = "";
-        _Dinero = 200.0f;
+        _Dinero = 5000.0f;
         _PuntosEnergia = 100;
         _Year = 1;
         _Month = 1;

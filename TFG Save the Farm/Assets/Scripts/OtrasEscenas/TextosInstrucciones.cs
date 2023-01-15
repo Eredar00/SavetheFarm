@@ -69,7 +69,10 @@ public class TextosInstrucciones : MonoBehaviour{
          "4. La partida acabarà el dia que no puguis pagar el deute",
 
         "PORTADA",
-        "SORTIR"
+        "SORTIR",
+
+        "HISTORIA PRINCIPAL",
+        "La historia principal d’aquest videojoc transcorre en els mesos següents a la primera part de la pandèmia COVID-19. \n \nDesprés d’haver estat sense poder sortir del domicili durant molts mesos, ha arribat l’estiu i les restriccions han disminuït. Molta gent ha tingut temps per pensar nous projectes i canvis en la seva vida, i aquest ha estat també el nostre cas. \n \nEn un moment donat, vam sol·licitar formar part d’un projecte que repartia terrenys i finques, i fa poc hem descobert que hem guanyat una granja a les afores d’una localitat tranquil·la i perduda de la civilització.\n \nEl problema apareix quan, al arribar a la granja descobrim que aquesta té un important deute, que no para de créixer i que s’ha d’anar pagant cada setmana, o en cas contrari, perdrem la granja."
     };
 
     private string[] _ESP_Text = {
@@ -137,7 +140,9 @@ public class TextosInstrucciones : MonoBehaviour{
         "4. La partida terminará el día que no puedas pagar la deuda",
 
         "PORTADA",
-        "SALIR"
+        "SALIR",
+        "HISTORIA PRINCIPAL",
+        "La historia principal de este videojuego transcurre en los meses siguientes a la primera parte de la pandemia COVID-19. \n \nDespués de haber estado sin poder salir del domicilio durante muchos meses, ha llegado el verano y las restricciones han disminuido.Mucha gente ha tenido tiempo para pensar nuevos proyectos y cambios en su vida, y éste ha sido también nuestro caso.\n \nEn un momento dado, solicitamos formar parte de un proyecto que repartía terrenos y fincas , y hace poco hemos descubierto que hemos ganado una granja en las afueras de una localidad tranquila y perdida de la civilización.\n \nEl problema aparece cuando, al llegar a la granja descubrimos que ésta tiene una importante deuda, que no para de crecer y que se debe ir pagando cada semana, o de lo contrario, perderemos la granja."
     };
 
     private string[] _ENG_Text = {
@@ -204,10 +209,12 @@ public class TextosInstrucciones : MonoBehaviour{
          "4. The game will end the day you can't pay the debt",
 
         "HOME PAGE",
-        "EXIT"
+        "EXIT",
+        "STORY OF THE GAME",
+        "The main story of this video game takes place in the months following the first part of the COVID-19 pandemic. \n \nAfter being unable to leave your home for many months, summer has arrived and the restrictions have decreased. Many people have had time to think about new projects and changes in their lives, and this has also been the case with you. \n \nAt one point, you applied to be part of a project that distributed land and estates , and you recently discovered that you have won a farm on the outskirts of a quiet town lost to civilization.\n \nThe problem appears when, upon arriving at the farm, you discover that it has a significant debt, which does not it stops growing and it has to be paid every week, or else you'll lose the farm."
     };
     
-    GameObject[] _ObjetosJuego = new GameObject[54];
+    GameObject[] _ObjetosJuego = new GameObject[56];
     private string _Idioma;
     private string[] _Textos;
     
@@ -225,7 +232,8 @@ public class TextosInstrucciones : MonoBehaviour{
     }
 
     private void CargarDatos(){
-        Transform pag01, pag02, pag03, pag04, pag05, pag06, pag07, pag08, pag09;
+        Transform pag00, pag01, pag02, pag03, pag04, pag05, pag06, pag07, pag08, pag09;
+        pag00 = transform.Find("Instrucciones").Find("Pag 0");
         pag01 = transform.Find("Instrucciones").Find("Pag 1");
         pag02 = transform.Find("Instrucciones").Find("Pag 2");
         pag03 = transform.Find("Instrucciones").Find("Pag 3");
@@ -239,6 +247,9 @@ public class TextosInstrucciones : MonoBehaviour{
         _ObjetosJuego[0] = transform.Find("Titulo").gameObject;
         _ObjetosJuego[52] = transform.Find("Portada").gameObject;
         _ObjetosJuego[53] = transform.Find("Salir").gameObject;
+
+        _ObjetosJuego[54] = pag00.Find("Titulo").gameObject;
+        _ObjetosJuego[55] = pag00.Find("Texto").gameObject;
 
         _ObjetosJuego[1] = pag01.Find("Titulo").gameObject;
         _ObjetosJuego[2] = pag01.Find("Texto").gameObject;

@@ -21,7 +21,7 @@ public class TiendaHortalizas : MonoBehaviour{
         "# Vegetals per collita: mín: ",
         " | màx: ",
         "# Un cop ha crescut, dóna collita cada ",
-        "dies",
+        " dies",
         "# Un cop ha crescut, NO torna a donar collita"
     };
 
